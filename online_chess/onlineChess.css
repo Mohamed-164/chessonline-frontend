@@ -1,0 +1,937 @@
+body{
+    overflow: hidden;
+    background-color: #202020;
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+}
+
+/* ___________________________________________ Entry _____________________________________ */
+
+#entry{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+.gameCreation{
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 40%;
+    height: 80vh;
+    background-color: #565353;
+    border-radius: 50px;
+}
+.container{
+    position: absolute;
+    width: 100%;
+    height: 60%;
+    top: 40%;
+    left: 5%;
+    display: flex;
+    flex-direction: column;
+    gap: 15%;
+}
+.btn{
+    width: 90%;
+    height: 10vh;
+    background-color: rgb(111, 254, 135);
+    border-radius: 50px;
+    outline: none;
+    border: none;
+    color: aliceblue;
+    font-size: xx-large;
+    font-family: sans-serif;
+    font-weight: 700;
+    text-shadow: 5px 2px 5px rgba(0, 0, 0, 0.3);
+}
+#gamestart{
+    position: absolute;
+    top: 5%;
+    object-fit: contain;
+    width: 30%;
+    height: 30%;
+}
+#code{
+    position: relative;
+    outline: none;
+    border: none;
+    width: 82%;
+    height: 10vh;
+    font-size: x-large;
+    font-family: sans-serif;
+    font-weight: 600;
+    border-radius: 50px;
+    padding-left: 40px;
+}
+input::placeholder{
+    position: absolute;
+    top: 30%;
+    left: 10%;
+    color: #565353;
+    font-size: x-large;
+    font-family: sans-serif;
+    font-weight: 600;
+}
+
+/* ___________________________________________ Mode Selection _____________________________________ */
+
+#mode-select{
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+#mode-select .gameCreation{
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 40%;
+    height: 85vh;
+    background-color: #494343;
+    border-radius: 50px;
+}
+#mode-select .container{
+    position: absolute;
+    left: 0.5%;
+    width: 100%;
+    top: auto;
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 3%;
+}
+#mode-select .btn{
+    position: relative;
+    outline: none;
+    border: none;
+    width: 90%;
+    height: 12%;
+    background-color: yellowgreen;
+    color: white;
+    font-family: sans-serif;
+    font-weight: 800;
+    font-size: x-large;
+    border-radius: 15px;
+    text-shadow: 5px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+#mode-select .newheading{
+    display: flex;
+    position: relative;
+    width: 100%;
+    height: 20%;
+}
+#mode-select .newheading p{
+    position: absolute;
+    left: 35%;
+    font-family: sans-serif;
+    font-weight: 800;
+    font-size: 30px;
+    color: white;
+}
+#mode-select #newgame{
+    object-fit: contain;
+    position: absolute;
+    width: 35%;
+    height: 35%;
+    left: 10%;
+    top: 25%;
+}
+#mode-select .btntext{
+    position: absolute;
+    top: 23%;
+    width: 100%;
+    left: 0;
+}
+#mode-select .btnimg{
+    position: absolute;
+    top: 23%;
+    left: 9%;
+    object-fit: contain;
+    width: 50%;
+    height: 50%;
+}
+
+/* __________________________________________ Skeleton frame ______________________________________ */
+#waiting{
+    position: relative;
+    display: none;
+}
+#waiting .skeleton-frame {
+    position: relative;
+    overflow: hidden;
+    background-color: #e0e0e0;
+}
+
+#waiting .skeleton-frame::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -150%;
+    width: 250%;
+    height: 100%;
+    background: linear-gradient(45deg, #e0e0e0 0%, #c0c0c0 50%, #e0e0e0 100%);
+    animation: shimmer 1.3s infinite alternate;
+}
+
+@keyframes shimmer {
+    0% {
+        left: -150%;
+    }
+    100% {
+        left: 100%;
+    }
+}
+
+#waiting .chessboard{
+    width: auto;
+    height: auto;
+}
+#waiting .clstimer{
+    border-radius: 25px;
+}
+#waiting .codeviewer{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    top: 30%;
+    left: 30%;
+    background-color: #545353;
+    border-radius: 50px;
+    width: 40%;
+    height: 40vh;
+}
+#waiting .para{
+    position: absolute;
+    left: 7%;
+}
+#waiting .code{
+    position: absolute;
+    top: 35%;
+
+}
+#waiting .code-mod{
+    position: absolute;
+    top: 60%;
+}
+#waiting .notify{
+    color: aliceblue;
+    font-size: x-large;
+    font-family: sans-serif;
+    font-weight: 600;
+}
+
+/* ____________________________________ chessboard start _________________________________________ */
+
+#board{
+    display: none;
+    width: 100vw;
+    height: 100vh;
+}
+#board #chessboard{
+    justify-self: center;
+    align-self: center;
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(8,1fr);
+    aspect-ratio: 1 / 1;
+    grid-template-rows: repeat(8,1fr);
+    border: 4px solid #444; 
+}
+#board .cell img{
+    width : 95%;
+    filter: drop-shadow(10px 4px 6px rgba(0, 0, 0, 0.5));
+}
+#board .cell{
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 1fr;
+    height: 1fr;
+    min-width: 35px;
+    max-width: 80px;
+    box-sizing: border-box;
+}
+#board .blacktimer.blacklight{
+    animation: pulseblink 3s infinite;
+}
+#board .whitetimer.whitelight{
+    animation: pulseblink 3s infinite;
+}
+#board .cell.pasthighlight{
+    background-color: rgba(128, 132, 249, 0.639) !important;
+}
+#board .cell.currenthighlight{
+    background-color: rgb(128, 132, 249) !important;
+}
+#board .cell.clickhighlight{
+    background-color: rgba(254, 254, 108, 0.902) !important;
+}
+#board .cell.highlighted{
+    background-color: rgba(158, 255, 11, 0.637) !important;
+    border:  1px solid white;
+}
+#board .cell.AttackHighlight{
+    background-color: rgba(243, 0, 85, 0.825) !important;
+    border:  1px solid white;
+}
+#board .cell.checkhighlight{
+    animation: pulseblink 1s infinite;
+}
+@keyframes pulseblink {
+    0%, 100%{
+
+    }
+    50%{
+        background-color : red;
+    }
+}
+#board .promotion{
+    display: none;
+    position: relative;
+    background-color: rgba(127, 236, 255, 0.795);
+    width:30%;
+    flex-direction: column;
+    z-index: 3;
+    align-items: center;
+    right: -53%;
+    top: -77%;
+    border-radius: 25px;
+    height:50vh;
+}
+#board .queen,.knight,.bishop,.Rook{
+    cursor: pointer; 
+}
+#board .queen,.knight,.bishop{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    border-bottom: 2px solid black;
+}
+#board .promotionpiece{
+    font-size: 25px;
+}
+#board .pieces{
+    font-size: 30px;
+}
+#board #result-frame{
+    position: relative;
+    display: none;
+    flex-direction: column;
+    background-color : #575757;
+    width : 30%;
+    height: 80%;
+    top : -90%;
+    z-index: 9999;
+    left:35%;
+    border-radius: 25px;
+    box-shadow: 5px 5px 5px 10px rgba(0, 0, 0, 0.3);
+}
+#board #image{
+    display: inline-block;
+    width: 26%;
+    height: 60%;
+}
+#board .cancel-btn{
+    position: inherit;
+    cursor: pointer;
+}
+#board #cross-wrong{
+    position: absolute;
+    color: rgb(255, 255, 255);
+    font-size: 110%;
+    left: 92%;
+    transform: translate(0%,40%);
+}
+#board .show-result{
+    position: absolute;
+    background-color: rgb(11, 220, 98);
+    box-shadow: inset 0px 4px 6px rgba(0, 0, 0, 0.3);
+    top : 10%;
+    left: 2.5%;
+    width: 95%;
+    height: 30%;
+    border-radius: 25px;
+}
+#board .show-result > :nth-child(1){
+    position: absolute;
+    top: 15%;
+    left: 1.5%;
+}
+#board .show-result > :nth-child(2){
+    position: absolute;
+    left: 35%;
+}
+#board .show-result > :nth-child(3){
+    position: absolute;
+    top: 50%;
+    left: 40%;
+}
+#board .result{
+    text-align: center;
+    font-size: xx-large;
+    color: white;
+    font-weight: 800;
+    font-family: sans-serif;
+}
+#board .reason{
+    text-align: center;
+    color: white;
+    font-family: sans-serif;
+    font-weight: 700;
+    font-size: large;
+}
+#board .Againplay{
+    position: absolute;
+    text-decoration: none;
+    box-shadow: inset 0px 4px 6px rgba(0, 0, 0, 0.3);
+    background-color: rgb(11, 220, 98);
+    left: 5%;
+    text-align: center;
+    top: 80%;
+    width: 80%;
+    padding: 5%;
+    border-radius: 50px;
+    color: white;
+    font-family: sans-serif;
+    font-weight: 700;
+    font-size: x-large;
+    
+}
+#board .home-link {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #475057;
+    color: white;
+    font-family: sans-serif;
+    text-decoration: none;
+    border-radius: 5px;
+}
+#board .home-link:hover {
+    background-color: #686e73;
+}
+#board .surebtn{
+    width: auto;
+    height: auto;
+    display: flex;
+    gap: 5%;
+}
+
+
+/* ____________________________________ Desktop view _________________________________________ */
+@media (min-width: 600px) and (max-width: 2300px){
+
+/* ____________________________________ Waiting view _________________________________________ */
+
+    #waiting .gridlayout{
+        display: grid;
+        grid-template-rows: 0.5fr 5fr 0.5fr;
+        grid-template-columns: 3fr 3fr;
+        width: 100vw;
+        height: 100vh;
+    }
+    #waiting .capturecell-1{
+        position: relative;
+        grid-column: 1;
+        grid-row: 1;
+        justify-self: center;
+        align-items: center;
+        top: 15%;
+        width: 90%;
+        height: 75%;
+        border-radius: 5px;
+    }
+    #waiting .capturecell-2{
+        position: relative;
+        top: 15%;
+        justify-self: center;
+        align-items: center;
+        grid-column: 1;
+        grid-row: 3;
+        width: 90%;
+        height: 75%;
+        border-radius: 5px;
+    }
+    #waiting .timer-1{
+        grid-column: 2;
+        grid-row: 1;
+        width: 15%;
+        height: 100%;
+    }
+    #waiting .timer-2{
+        grid-column: 2;
+        grid-row: 3;
+        width: 15%;
+        height: 100%;
+    }
+    #waiting .chessboard{
+        grid-column: 1;
+        grid-row: 2;
+    }
+
+/* ____________________________________ chessboard view _________________________________________ */
+
+#board .game-layout{
+    display: grid;
+    grid-template-rows: 0.5fr 5fr 0.5fr;
+    grid-template-columns: 3fr 3fr;
+    width: 100vw;
+    height: 100vh;
+}
+#board .blackcapture{
+    grid-row: 1;
+    grid-column: 1;
+    display: flex;
+    justify-self: center;
+    align-self: center;
+    width: 90%;
+    height: 90%;
+    border-radius: 5px;
+    background-color: #6e96bfff;
+}
+#board .Whitecapture{
+    grid-row: 3;
+    grid-column: 1;
+    display: flex;
+    width: 90%;
+    height: 90%;
+    border-radius: 5px;
+    background-color: rgb(204, 228, 252);                 
+    justify-self: center;
+    align-self: center;
+}
+#board .capturecell img {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+}
+#board .clstimer{
+    display: flex;
+    text-align: center;
+    align-items: center;
+    width: 10%;
+    height: 10%;
+    background-color: white;
+    border-radius: 25px;
+}
+#board .timer{
+    position: absolute;
+    padding: 0%;
+    object-fit: contain;
+    right: 40%;
+    width: 90%;
+    height: 100%;
+}
+#board .blacktimer{
+    position: relative;
+    width: 20%;
+    height: 100%;
+    grid-column: 2;
+    grid-row: 1;
+}
+#board .black-time{
+    position: absolute;
+    font-size: x-large;
+    left: 30%;
+}
+#board .whitetimer{
+    position: relative;
+    width: 20%;
+    height: 100%;
+    grid-column: 2;
+    grid-row: 3;
+}
+#board .white-time{
+    position: absolute;
+    font-size: x-large;
+    left: 30%;
+}
+#board .whitebtn{
+    position: relative;
+    top: 28%;
+    height: 70%;
+    grid-row: 2;
+    grid-column: 2;
+}
+#board .whiteresign{
+    outline: none;
+    border: none;
+    position: absolute;
+    top: 75%; 
+    font-size: 250%;
+    background-color: #475057;
+    color: rgb(255, 255, 255);
+    width: 13.5%;
+    height: 18%;
+    border-radius: 25px; 
+}
+#board .white-text{
+    position: absolute;
+    top: 89%;
+    left: 2%;
+    font-size: larger;
+    font-family: sans-serif;
+    font-weight: 800;
+    width: 50px;
+    height: 50px;
+    color: white;
+}
+#board .playagain{
+    grid-row: 2;
+    grid-column: 2;
+    display: none;
+    position: relative;
+    z-index: 10;
+    top: 45%;
+    left: 20%;
+    font-size: x-large;
+    font-family: sans-serif;
+    font-weight: 600;
+    background-color: rgb(113, 232, 117);
+    color: rgb(255, 255, 255);
+    width: 40%;
+    height: 10%;
+    border-radius: 50px; 
+}
+#board .confirm{
+    position: relative;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #3e4448;
+    width: 30%;
+    height: 30%;
+    top : -70%;
+    left: 35%;
+    border-radius: 10px;
+}
+#board .confirm p{
+    font-size: x-large;
+    font-family: sans-serif;
+    font-weight: 600;
+    color: rgb(225, 239, 253);
+}
+
+}
+
+/* _____________________________________________ Mobile view ____________________________________________ */
+
+@media (min-width: 300px) and (max-width: 500px) {
+
+/* ___________________________________________ Entry _____________________________________ */
+
+.gameCreation{
+    width: 90%;
+    height: 60vh;
+}
+#gamestart{
+    top: 0%;
+}
+.container{
+    top: 30%;
+    left: 5%;
+    display: flex;
+    flex-direction: column;
+    gap: 15%;
+}
+.btn{
+    font-size: x-large;
+}
+input::placeholder{
+    top: 38%;
+    left: 15%;
+    font-size: large;
+}
+
+/* ___________________________________________ Mode Selection _____________________________________ */
+
+#mode-select .gameCreation{
+    width: 90%;
+    height: 65vh;
+}
+#mode-select .container{
+    height: 70vh;
+}
+#mode-select .btn{
+    height: 10%;
+}
+#mode-select .notime{
+    position: absolute;
+    left: 5%;
+}
+
+/* ____________________________________________ Skeleton frame ________________________________________ */
+
+    #waiting{
+        position: relative;
+        top: 10%;
+        height: 40vh;
+    }
+    #waiting .gridlayout{
+        display: grid;
+        gap: 20px;
+        position: absolute;
+        grid-template-rows: 5% 5% 0.7fr 5% 5% 5%;
+        grid-template-columns: 100vw;
+        width: 100vw;
+        height: 100vh;
+    }
+    #waiting .capturecell-1{
+        grid-column: 1;
+        grid-row: 2;
+        width: 90%;
+        left: 5%;
+        height: 100%;
+        border-radius: 5px;
+    }
+    .capturecell-2{
+        grid-column: 1;
+        grid-row: 4;
+        width: 90%;
+        left: 5%;
+        height: 100%;
+        border-radius: 5px;
+    }
+    #waiting .chessboard{
+        grid-column: 1;
+        grid-row: 3;
+    }
+    #waiting .timer-1{
+        grid-column: 1;
+        grid-row: 1;
+        left: 5%;
+        width: 25%;
+        height: 100%;
+    }
+    #waiting .timer-2{
+        grid-column: 1;
+        grid-row: 5;
+        left: 5%;
+        width: 25%;
+        height: 100%;
+    }
+    #waiting .codeviewer{
+        top: 35%;
+        left: 2%;
+        padding: 2%;
+        width: 90%;
+        height: 35vh;
+    }
+    #waiting .notify{
+        text-align: left;
+        font-size: large;
+    }
+    #waiting .para{
+        position: absolute;
+        left: 5%;
+        top: 10%;
+    }
+
+/* __________________________________________ chessboard view _____________________________________ */
+
+#board{
+    position: relative;
+    top: 10%;
+}
+#board .game-layout{
+    top: 5%;
+    position: relative;
+    display: grid;
+    grid-template-rows: 5% 5% 0.5fr 5% 5% 5%;
+    grid-template-columns: 100vw;
+    width: 100vw;
+    height: 100vh;
+}
+#board .promotion{
+    width:70%;
+    right: -15%;
+    top: -80%;
+    height:31vh;
+}
+#board .promotionpiece{
+    font-size: 120%;
+}
+#board .pieces{
+    font-size: 100%;
+}
+#board #chessboard{
+    grid-row: 3;
+}
+#board .blackcapture{
+    grid-row: 2;
+    display: flex;
+    justify-self: center;
+    align-self: center;
+    width: 90%;
+    height: 90%;
+    border-radius: 5px;
+    background-color: #6e96bfff;
+}
+#board .Whitecapture{
+    grid-row: 4;
+    display: flex;
+    width: 90%;
+    height: 90%;
+    border-radius: 5px;
+    background-color: rgb(204, 228, 252);                 
+    justify-self: center;
+    align-self: center;
+}
+#board .capturecell img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+#board .clstimer{
+    display: flex;
+    text-align: center;
+    align-items: center;
+    width: 10%;
+    height: 10%;
+    background-color: white;
+    border-radius: 25px;
+}
+#board .timer{
+    position: absolute;
+    padding: 0%;
+    object-fit: contain;
+    right: 40%;
+    width: 90%;
+    height: 100%;
+}
+#board .blacktimer{
+    position: relative;
+    grid-row: 1;
+    grid-column: 1;
+    width: 25%;
+    left: 5%;
+    height: 100%;
+}
+#board .black-time{
+    position: absolute;
+    font-size: large;
+    right: 20%;
+}
+#board .whitetimer{
+    position: relative;
+    grid-row: 5;
+    grid-column: 1;
+    width: 25%;
+    height: 100%;
+    left: 5%;
+}
+#board .white-time{
+    position: absolute;
+    font-size: large;
+    left: 30%;
+}
+#board .whitebtn{
+    position: relative;
+    grid-row: 5;
+    grid-column: 1;
+    left: 72%;
+    width: 11%;
+    height: 130%;
+}
+#board .whiteresign{
+    outline: none;
+    border: none;
+    position: absolute;
+    font-size: 180%;
+    background-color: #475057;
+    color: rgb(255, 255, 255);
+    width: 170%;
+    height: 115%;
+    border-radius: 10px; 
+}
+#board .home-link {
+    background-color: #2a2f33;
+}
+#board .confirm{
+    position: relative;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #475057;
+    width: 90%;
+    height: 20%;
+    left: 5%;
+    top : -80%;
+    border-radius: 5px;
+}
+#board .confirm p{
+    font-size: x-large;
+    font-family: sans-serif;
+    font-weight: 600;
+    color: rgb(200, 205, 210);
+}
+#board .white-text{
+    position: absolute;
+    font-size: 0.8rem;
+    font-family: sans-serif;
+    font-weight: 800;
+    top: 85%;
+    left: 30%;
+    width: auto;
+    height: 100%;
+    color: white;
+}
+#board .playagain{
+    grid-row: 6;
+    display: none;
+    position: relative;
+    z-index: 10;
+    justify-self: center;
+    align-self: center;
+    font-size: x-large;
+    font-family: sans-serif;
+    font-weight: 600;
+    background-color: rgb(113, 232, 117);
+    color: rgb(255, 255, 255);
+    width: 40%;
+    height: 100%;
+    border-radius: 50px; 
+}
+#board #result-frame{
+    position: relative;
+    display: none;
+    flex-direction: column;
+    background-color : #575757;
+    width : 80%;
+    height: 55%;
+    top : -90%;
+    z-index: 9999;
+    left:10%;
+    border-radius: 25px;
+    box-shadow: 5px 5px 5px 10px rgba(0, 0, 0, 0.3);
+}
+#board #image{
+    display: inline-block;
+    width: 30%;
+    height: 60%;
+}
+#board #cross-wrong{
+    position: absolute;
+    color: rgb(255, 255, 255);
+    font-size: 110%;
+    left: 90%;
+    transform: translate(0%,40%);
+}
+
+
+}
