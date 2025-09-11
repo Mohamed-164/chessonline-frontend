@@ -1,0 +1,626 @@
+body{
+    overflow: hidden;
+    background-color: #202020;
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+}
+.beforegame{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+}
+.container{
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+    width: 35%;
+    height: 80%;
+    background-color: rgb(51, 51, 51);
+    border-radius: 25px;
+    box-shadow: 5px 2px 5px rgba(0, 0, 0, 0.3);
+}
+.newheading{
+    display: flex;
+    position: relative;
+    width: 100%;
+    height: 20%;
+}
+.newheading p{
+    position: absolute;
+    left: 35%;
+    font-family: sans-serif;
+    font-weight: 800;
+    font-size: 30px;
+    color: white;
+}
+#newgame{
+    object-fit: contain;
+    position: absolute;
+    width: 35%;
+    height: 35%;
+    left: 10%;
+    top: 25%;
+}
+.button{
+    position: relative;
+    width: 90%;
+    height: 12%;
+    background-color: yellowgreen;
+    color: white;
+    font-family: sans-serif;
+    font-weight: 800;
+    font-size: x-large;
+    border-radius: 15px;
+    outline: none;
+    border: none;
+    text-shadow: 5px 2px 5px rgba(0, 0, 0, 0.3);
+}
+.btntext{
+    position: absolute;
+    top: 23%;
+    width: 100%;
+    left: 0;
+}
+.btnimg{
+    position: absolute;
+    top: 23%;
+    left: 9%;
+    object-fit: contain;
+    width: 50%;
+    height: 50%;
+}
+
+@media (min-width: 600px) and (max-width: 2300px){
+.game-layout{
+    display: none    ;
+    grid-template-rows: 0.5fr 5fr 0.5fr;
+    grid-template-columns: 3fr 3fr;
+    width: 100vw;
+    height: 100vh;
+}
+.blackcapture{
+    grid-row: 1;
+    grid-column: 1;
+    display: flex;
+    justify-self: center;
+    align-self: center;
+    width: 90%;
+    height: 90%;
+    border-radius: 5px;
+    background-color: #6e96bfff;
+}
+.Whitecapture{
+    grid-row: 3;
+    grid-column: 1;
+    display: flex;
+    width: 90%;
+    height: 90%;
+    border-radius: 5px;
+    background-color: rgb(204, 228, 252);                 
+    justify-self: center;
+    align-self: center;
+}
+.capturecell img {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+}
+.clstimer{
+    display: flex;
+    text-align: center;
+    align-items: center;
+    width: 10%;
+    height: 10%;
+    background-color: white;
+    border-radius: 25px;
+}
+.timer{
+    position: absolute;
+    padding: 0%;
+    object-fit: contain;
+    right: 40%;
+    width: 90%;
+    height: 100%;
+}
+.blacktimer{
+    position: relative;
+    width: 20%;
+    height: 100%;
+    grid-column: 2;
+    grid-row: 1;
+}
+.black-time{
+    position: absolute;
+    font-size: x-large;
+    left: 30%;
+}
+.whitetimer{
+    position: relative;
+    width: 20%;
+    height: 100%;
+    grid-column: 2;
+    grid-row: 3;
+}
+.white-time{
+    position: absolute;
+    font-size: x-large;
+    left: 30%;
+}
+.whitebtn{
+    position: relative;
+    top: 28%;
+    height: 70%;
+    grid-row: 2;
+    grid-column: 2;
+}
+.whiteresign{
+    position: absolute;
+    top: 75%; 
+    font-size: 250%;
+    background-color: rgb(151, 229, 250);
+    color: rgb(255, 255, 255);
+    width: 13.5%;
+    height: 18%;
+    border-radius: 25px; 
+}
+.white-text{
+    position: absolute;
+    top: 89%;
+    left: 2%;
+    font-size: larger;
+    font-family: sans-serif;
+    font-weight: 800;
+    width: 50px;
+    height: 50px;
+    color: white;
+}
+.playagain{
+    grid-row: 2;
+    grid-column: 2;
+    display: none;
+    position: relative;
+    z-index: 10;
+    top: 45%;
+    left: 20%;
+    font-size: x-large;
+    font-family: sans-serif;
+    font-weight: 600;
+    background-color: rgb(113, 232, 117);
+    color: rgb(255, 255, 255);
+    width: 40%;
+    height: 10%;
+    border-radius: 50px; 
+}
+.blackbtn{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    grid-row: 2;
+    grid-column: 2;
+}
+.blackresign{
+    position: absolute;
+    top: 5%;
+    font-size: 250%;
+    background-color: #6e96bfff;
+    color: black;
+    width: 13%;
+    height: 13%;
+    border-radius: 25px;
+}
+.black-text{
+    position: relative;
+    top: 15%;
+    left: 2%;
+    font-size: larger;
+    font-family: sans-serif;
+    font-weight: 800;
+    width: 50px;
+    height: 50px;
+    color: white;
+}
+}
+#chessboard{
+    justify-self: center;
+    align-self: center;
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(8,1fr);
+    aspect-ratio: 1 / 1;
+    grid-template-rows: repeat(8,1fr);
+    border: 4px solid #444; 
+}
+.cell img{
+    width : 95%;
+    filter: drop-shadow(10px 4px 6px rgba(0, 0, 0, 0.5));
+}
+.cell{
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 1fr;
+    height: 1fr;
+    min-width: 35px;
+    max-width: 80px;
+    box-sizing: border-box;
+}
+.blacktimer.blacklight{
+    animation: pulseblink 3s infinite;
+}
+.whitetimer.whitelight{
+    animation: pulseblink 3s infinite;
+}
+.cell.pasthighlight{
+    background-color: rgba(128, 132, 249, 0.639) !important;
+}
+.cell.currenthighlight{
+    background-color: rgb(128, 132, 249) !important;
+}
+.cell.clickhighlight{
+    background-color: rgba(254, 254, 108, 0.902) !important;
+}
+.cell.highlighted{
+    background-color: rgba(158, 255, 11, 0.637) !important;
+    border:  1px solid white;
+}
+.cell.AttackHighlight{
+    background-color: rgba(243, 0, 85, 0.825) !important;
+    border:  1px solid white;
+}
+.cell.checkhighlight{
+    animation: pulseblink 1s infinite;
+}
+@keyframes pulseblink {
+    0%, 100%{
+
+    }
+    50%{
+        background-color : red;
+    }
+}
+.promotion{
+    display: none;
+    position: relative;
+    background-color: rgba(127, 236, 255, 0.795);
+    width:30%;
+    flex-direction: column;
+    z-index: 3;
+    align-items: center;
+    right: -53%;
+    top: -77%;
+    border-radius: 25px;
+    height:50vh;
+}
+.queen,.knight,.bishop,.Rook{
+    cursor: pointer; 
+}
+.queen,.knight,.bishop{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    border-bottom: 2px solid black;
+}
+.promotionpiece{
+    font-size: 25px;
+}
+.pieces{
+    font-size: 30px;
+}
+#result-frame{
+    position: relative;
+    display: none;
+    flex-direction: column;
+    background-color : #575757;
+    width : 30%;
+    height: 80%;
+    top : -90%;
+    z-index: 9999;
+    left:35%;
+    border-radius: 25px;
+    box-shadow: 5px 5px 5px 10px rgba(0, 0, 0, 0.3);
+}
+#image{
+    display: inline-block;
+    width: 26%;
+    height: 60%;
+}
+.cancel-btn{
+    position: inherit;
+    cursor: pointer;
+}
+#cross-wrong{
+    position: absolute;
+    color: rgb(255, 255, 255);
+    font-size: 110%;
+    left: 92%;
+    transform: translate(0%,40%);
+}
+.show-result{
+    position: absolute;
+    background-color: rgb(11, 220, 98);
+    box-shadow: inset 0px 4px 6px rgba(0, 0, 0, 0.3);
+    top : 10%;
+    left: 2.5%;
+    width: 95%;
+    height: 30%;
+    border-radius: 25px;
+}
+.show-result > :nth-child(1){
+    position: absolute;
+    top: 15%;
+    left: 1.5%;
+}
+.show-result > :nth-child(2){
+    position: absolute;
+    left: 35%;
+}
+.show-result > :nth-child(3){
+    position: absolute;
+    top: 50%;
+    left: 40%;
+}
+.result{
+    text-align: center;
+    font-size: xx-large;
+    color: white;
+    font-weight: 800;
+    font-family: sans-serif;
+}
+.reason{
+    text-align: center;
+    color: white;
+    font-family: sans-serif;
+    font-weight: 700;
+    font-size: large;
+}
+.Againplay{
+    position: absolute;
+    text-decoration: none;
+    box-shadow: inset 0px 4px 6px rgba(0, 0, 0, 0.3);
+    background-color: rgb(11, 220, 98);
+    left: 5%;
+    text-align: center;
+    top: 80%;
+    width: 80%;
+    padding: 5%;
+    border-radius: 50px;
+    color: white;
+    font-family: sans-serif;
+    font-weight: 700;
+    font-size: x-large;
+    
+}
+
+/* ________________________ mobile view ___________________________________ */
+@media (min-width: 300px) and (max-width: 500px) {
+.container{
+    width: 95%;
+}
+#newgame{
+    object-fit: contain;
+    position: absolute;
+    width: 25%;
+    height: 25%;
+    left: 18%;
+    top: 21%;
+}
+.btntext{
+    position: absolute;
+    top: 30%;
+    width: 100%;
+    left: 0;
+}
+.btnimg{
+    position: absolute;
+    top: 23%;
+    left: 5%;
+    object-fit: contain;
+    width: 50%;
+    height: 50%;
+}
+.game-layout{
+    top: 5%;
+    position: relative;
+    display: none;
+    grid-template-rows: 5% 5% 0.5fr 5% 5% 5%;
+    grid-template-columns: 100vw;
+    width: 100vw;
+    height: 100vh;
+}
+.promotion{
+    width:70%;
+    right: -15%;
+    top: -80%;
+    height:31vh;
+}
+.promotionpiece{
+    font-size: 120%;
+}
+.pieces{
+    font-size: 100%;
+}
+#chessboard{
+    grid-row: 3;
+}
+.blackcapture{
+    grid-row: 2;
+    display: flex;
+    justify-self: center;
+    align-self: center;
+    width: 90%;
+    height: 90%;
+    border-radius: 5px;
+    background-color: #6e96bfff;
+}
+.Whitecapture{
+    grid-row: 4;
+    display: flex;
+    width: 90%;
+    height: 90%;
+    border-radius: 5px;
+    background-color: rgb(204, 228, 252);                 
+    justify-self: center;
+    align-self: center;
+}
+.capturecell img {
+    width: 25px;
+    height: 25px;
+    object-fit: contain;
+}
+.clstimer{
+    display: flex;
+    text-align: center;
+    align-items: center;
+    width: 10%;
+    height: 10%;
+    background-color: white;
+    border-radius: 25px;
+}
+.timer{
+    position: absolute;
+    padding: 0%;
+    object-fit: contain;
+    right: 40%;
+    width: 90%;
+    height: 100%;
+}
+.blacktimer{
+    position: relative;
+    grid-row: 1;
+    grid-column: 1;
+    width: 25%;
+    left: 5%;
+    height: 100%;
+    transform: rotate(180deg);
+}
+.black-time{
+    position: absolute;
+    font-size: large;
+    right: 20%;
+}
+.blackbtn{
+    grid-row: 1;
+    grid-column: 1;
+    position: relative;
+    left: 70%;
+    width: 11%;
+    height: 130%;
+}
+.blackresign{
+    outline : none;
+    border : none;
+    position: absolute;
+    font-size: 180%;
+    top: -35%;
+    width: 170%;
+    height: 110%;
+    transform: rotate(180deg);
+    border-radius: 10px;
+    background-color: #6e96bfff;
+}
+.black-text{
+    position: absolute;
+    top: -90%;
+    left: 30%;
+    font-size: small;
+    font-family: sans-serif;
+    font-weight: 800;
+    width: auto;
+    height: auto;
+    transform: rotate(180deg);
+    color: white;
+}
+.whitetimer{
+    position: relative;
+    grid-row: 5;
+    grid-column: 1;
+    width: 25%;
+    height: 100%;
+    left: 5%;
+}
+.white-time{
+    position: absolute;
+    font-size: large;
+    left: 30%;
+}
+.whitebtn{
+    position: relative;
+    grid-row: 5;
+    grid-column: 1;
+    left: 72%;
+    width: 11%;
+    height: 130%;
+}
+.whiteresign{
+    outline : none;
+    border : none;
+    position: absolute;
+    font-size: 180%;
+    background-color: rgb(151, 229, 250);
+    color: rgb(255, 255, 255);
+    width: 170%;
+    height: 115%;
+    border-radius: 10px; 
+}
+.white-text{
+    position: absolute;
+    font-size: 0.8rem;
+    font-family: sans-serif;
+    font-weight: 800;
+    top: 85%;
+    left: 30%;
+    width: auto;
+    height: 100%;
+    color: white;
+}
+.playagain{
+    grid-row: 6;
+    display: none;
+    position: relative;
+    justify-self: center;
+    align-self: center;
+    font-size: x-large;
+    font-family: sans-serif;
+    font-weight: 600;
+    background-color: rgb(113, 232, 117);
+    color: rgb(255, 255, 255);
+    width: 40%;
+    height: 100%;
+    border-radius: 50px; 
+}
+#result-frame{
+    position: relative;
+    display: none;
+    flex-direction: column;
+    background-color : #575757;
+    width : 80%;
+    height: 55%;
+    top : -90%;
+    z-index: 9999;
+    left:10%;
+    border-radius: 25px;
+    box-shadow: 5px 5px 5px 10px rgba(0, 0, 0, 0.3);
+}
+#image{
+    display: inline-block;
+    width: 30%;
+    height: 60%;
+}
+#cross-wrong{
+    position: absolute;
+    color: rgb(255, 255, 255);
+    font-size: 110%;
+    left: 90%;
+    transform: translate(0%,40%);
+}
+
+
+}
