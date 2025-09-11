@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="pieces_Img/chesswebicon.png" type="/image/png">
+    <title>chess.com</title>
+</head>
+<style>
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #202020;
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+}
+.gameCreation{
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 40%;
+    height: 80vh;
+    background-color: #565353;
+    border-radius: 50px;
+}
+.container{
+    position: absolute;
+    width: 100%;
+    height: 60%;
+    top: 40%;
+    left: 5%;
+    display: flex;
+    flex-direction: column;
+    gap: 15%;
+}
+.btn{
+    width: 90%;
+    height: 10vh;
+    background-color: rgb(111, 254, 135);
+    border-radius: 50px;
+    outline: none;
+    border: none;
+    color: aliceblue;
+    font-size: xx-large;
+    font-family: sans-serif;
+    font-weight: 700;
+    text-shadow: 5px 2px 5px rgba(0, 0, 0, 0.3);
+}
+#gamestart{
+    position: absolute;
+    top: 5%;
+    object-fit: contain;
+    width: 30%;
+    height: 30%;
+}
+@media (min-width: 300px) and (max-width: 500px) {
+body{
+    height: 90vh;
+}
+.gameCreation{
+    width: 90%;
+    height: 60vh;
+}
+}
+</style>
+<body>
+    <div class="gameCreation">
+        <img src="/pieces_Img/gamestart.png" id="gamestart" alt="">
+        <div class="container">
+            <a href="onlineChess.html">
+                <button class="btn">online Multiplayer</button>
+            </a>
+            <a href="chess.html">
+                <button class="btn">local Multiplayer</button>
+            </a>
+        </div>
+    </div>
+</body>
+</html>

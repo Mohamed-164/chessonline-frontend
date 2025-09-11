@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>game not found</title>
+  </head>
+  <style>
+    body {
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      background-color: #202020;
+      width: 100vw;
+      height: 100vh;
+      margin: 0;
+    }
+    .notify-the-error {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      background-color: transparent;
+      width: 50%;
+      height: 50%;
+    }
+    .text404 {
+      color: rgb(200, 205, 210);
+      font-size: xx-large;
+      font-family: sans-serif;
+      font-weight: 600;
+    }
+    .reason {
+      color: rgb(200, 205, 210);
+      font-size: medium;
+      font-family: sans-serif;
+      font-weight: 600;
+    }
+    .home-link {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #475057;
+      color: white;
+      font-family: sans-serif;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+    .home-link:hover {
+      background-color: #686e73;
+    }
+  </style>
+  <body>
+    <div class="notify-the-error">
+      <p class="text404">404 NOT FOUND</p>
+      <p class="reason">
+        Oops! The game you're looking for might have already finished, is currently occupied, or does not exist.
+      </p>
+    </div>
+    <a href="/" class="home-link">Back to Home</a>
+  </body>
+</html>

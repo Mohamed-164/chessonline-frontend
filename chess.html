@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Chess.com</title>
+    <link rel="icon" href="pieces_Img/chesswebicon.png" type="/image/png">
+    <link rel="stylesheet" href="local_chess/chess.css">
+</head>
+<body>
+    <div class="beforegame">
+        <div class="container">
+            <div class="newheading">
+                <img id="newgame" src="pieces_Img/newgame.png" alt="">
+                <p>New Game</p>
+            </div>
+            <button onclick="userselect(event)" class="button notime">
+                <span><img src="pieces_Img/notimer.png" class="btnimg"></span>
+                <span class="btntext">NO TIME</span>
+            </button> 
+            <button onclick="userselect(event)" class="button 3min">
+                <span><img src="pieces_Img/bullet.png" class="btnimg"></span>
+                <span class="btntext">3 MIN</span> 
+            </button> 
+            <button onclick="userselect(event)" class="button 5min">
+                <span><img src="pieces_Img/blitz.png" class="btnimg"></span>
+                <span class="btntext">5 MIN</span> 
+            </button> 
+            <button onclick="userselect(event)" class="button 10min">
+                <span><img src="pieces_Img/stopwatch.png" class="btnimg"></span>
+                <span class="btntext">10 MIN</span> 
+            </button> 
+            <button onclick="userselect(event)" class="button 15min">
+                <span><img src="pieces_Img/stopwatch.png" class="btnimg"></span>
+                <span class="btntext">15 MIN</span> 
+            </button> 
+        </div>
+    </div>
+    <div class="game-layout">
+        <div class="blackcapture"></div>
+        <div id="chessboard"></div>
+        <div class="Whitecapture"></div>
+        <div class="clstimer blacktimer">
+            <img class ="timer" src="pieces_Img/timericon.png" alt="">
+            <span class="black-time">-- : --</span>
+        </div>
+        <div class="clstimer whitetimer">
+            <img class ="timer" src="pieces_Img/timericon.png" alt="">
+            <span class="white-time">-- : --</span>
+        </div>
+        <div class="blackbtn">
+            <button class="blackresign" onclick="Blackresign()">⚑</button>
+            <p class="black-text">Resign</p>
+        </div>
+        <button class="playagain" onclick="resetgame()" >play again?</button>
+        <div class="whitebtn">            
+            <button class="whiteresign" onclick="whiteresign()">⚑</button>
+            <p class="white-text">Resign</p>
+        </div>
+    </div>
+    <div class="promotion">
+      <div class="queen">
+          <p class="promotionpiece"><span class="pieces">♛</span> Queen</p>
+      </div>
+      <div class="knight">
+          <p class="promotionpiece"> <span class="pieces">♞</span> Knight</p>
+      </div>
+      <div class="bishop">
+          <p class="promotionpiece"><span class="pieces">♝</span> Bishop</p>
+      </div>
+      <div class="Rook">
+          <p class="promotionpiece"><span class="pieces">♜</span> Rook</p>
+      </div>
+    </div>
+    <div id="result-frame">
+        <div class="cancel-btn">
+            <span id="cross-wrong">✖</span>
+        </div>
+        <div class="show-result">
+            <img id="image" alt="resultImage">
+            <p class="result">user hello!</p>
+            <p class="reason">by reason</p>
+        </div>
+        <a class="Againplay" href="#" onclick="resetgame()">Wanna play again ?</a>
+    </div>
+</body>
+<script src="local_chess/mainChess.js" type="module"></script>
+</html>
