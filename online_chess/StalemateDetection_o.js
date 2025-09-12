@@ -80,8 +80,13 @@ cancel.onclick = () =>{
   window.resign = resign;
 
 export function stalemate() {
-  
+  let whiteturn = false;
+  let blackturn = false;
   if(gameState.length > 0){
+
+    let [piece] = gameState.at(-1);
+    if (piece === piece.toUpperCase()) {blackturn = true} else{whiteturn = true} 
+
     let currentlength = gameState.length;
     let currentWhiteCapture = WhiteCapturedPiece.length;
     let currentBlackCapture = BlackCapturedPiece.length;
@@ -331,15 +336,15 @@ let noBlackPiece = !blackpawn && !blackknight && !blackrook && !blackbishop && !
           )
   }
   function noLegalMoveforKing(){
-    return (!isWhiteincheck && !isWhitelegalMove && noWhitePiece) ||
-    (!isBlackincheck && !isBlacklegalMove && noBlackPiece);
+    return (!isWhiteincheck && !isWhitelegalMove && noWhitePiece && whiteturn) ||
+    (!isBlackincheck && !isBlacklegalMove && noBlackPiece && blackturn);
   }
 
   function pawninactivity(){
-    return ((!isWhiteincheck && !isWhitelegalMove && !whiteknight && !whiterook &&
+    return ((whiteturn && !isWhiteincheck && !isWhitelegalMove && !whiteknight && !whiterook &&
             !whitebishop && !whitequeen && whitepawninactivity && !whitepawn_left && !whitepawn_right)
           ) ||
-          ((!isBlackincheck && !isBlacklegalMove && !blackknight && !blackrook &&
+          ((blackturn && !isBlackincheck && !isBlacklegalMove && !blackknight && !blackrook &&
             !blackbishop && !blackqueen && blackpawninactivity && !blackpawn_left && !blackpawn_right)
           )
   }
@@ -360,11 +365,13 @@ let noBlackPiece = !blackpawn && !blackknight && !blackrook && !blackbishop && !
     let [bp3,bcr3,bcc3,bpr3,bpc3] = gameState[black_3];
     if(((wp1 == wp2 && wcr1 == wpr2 && wcc1 == wpc2) && 
         (wp2 == wp3 && wcr2 == wpr3 && wcc2 == wpc3) &&
-        (wp1 == wp3 && wcr1 == wcr3 && wcc1 == wcc3)
+        (wp1 == wp3 && wcr1 == wcr3 && wcc1 == wcc3) &&
+        !isWhiteincheck
       ) &&
       ((bp1 == bp2 && bcr1 == bpr2 && bcc1 == bpc2) && 
         (bp2 == bp3 && bcr2 == bpr3 && bcc2 == bpc3) &&
-        (bp1 == bp3 && bcr1 == bcr3 && bcc1 == bcc3)
+        (bp1 == bp3 && bcr1 == bcr3 && bcc1 == bcc3) &&
+        !isBlackincheck
       )
     ){
       return true;
@@ -409,12 +416,12 @@ let noBlackPiece = !blackpawn && !blackknight && !blackrook && !blackbishop && !
   }
   if(noPieceTaken()){
     gameover.play()
-    let image = "../pieces_Img/drawimage.png";
+    let image = "../pieces_Img/50move.png";
     resultframe("#a0a0a0","Draw","by 50 Rules Move",image);
   }
   if(repetitativeMove()){
     gameover.play();
-    let image = "../pieces_Img/drawimage.png";
+    let image = "../pieces_Img/repetative.png";
     resultframe("#a0a0a0","Draw","by repetitative move",image);
   }
   
