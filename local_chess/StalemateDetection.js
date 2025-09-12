@@ -41,31 +41,35 @@ cancel.onclick = () =>{
   result_from.style.display = "none";
   playagain.style.display = "block";
 }
-
-  function whiteresign(){
+  function resultframe(color,results,reasons,image){
     result_from.style.display = "flex";
-    resultcolor.style.backgroundColor = "rgb(11, 220, 98)";
-    result.textContent = "Black Won";
-    reason.textContent = "by Resignation";
-    resultImage.src = "../pieces_Img/resignicon.png";
-    gameover.play();
+    resultcolor.style.backgroundColor = color;
+    result.textContent = results;
+    reason.textContent = reasons;
+    resultImage.src = image;
     gameOver();
   }
-  function Blackresign(){
-    result_from.style.display = "flex";
-    resultcolor.style.backgroundColor = "rgb(11, 220, 98)";
-    result.textContent = "White Won";
-    reason.textContent = "by Resignation";
-    resultImage.src = "../pieces_Img/resignicon.png";
+  function whiteresign(){
+    let image = "../pieces_Img/resignicon.png";
+    resultframe("rgb(11, 220, 98)","Black Won","by Resignation",image);
     gameover.play();
-    gameOver();
+  }
+  function Blackresign(){
+    let image = "../pieces_Img/resignicon.png";
+    resultframe("rgb(11, 220, 98)","White Won","by Resignation",image);
+    gameover.play();
   }
 
   window.whiteresign = whiteresign;
   window.Blackresign = Blackresign;
 export function stalemate() {
-  
+  let whiteturn = false;
+  let blackturn = false;
   if(gameState.length > 0){
+
+    let [piece] = gameState.at(-1);
+    if (piece === piece.toUpperCase()) {blackturn = true} else{whiteturn = true} 
+
     let currentlength = gameState.length;
     let currentWhiteCapture = WhiteCapturedPiece.length;
     let currentBlackCapture = BlackCapturedPiece.length;
@@ -315,15 +319,15 @@ let noBlackPiece = !blackpawn && !blackknight && !blackrook && !blackbishop && !
           )
   }
   function noLegalMoveforKing(){
-    return (!isWhiteincheck && !isWhitelegalMove && noWhitePiece) ||
-    (!isBlackincheck && !isBlacklegalMove && noBlackPiece);
+    return (!isWhiteincheck && !isWhitelegalMove && noWhitePiece && whiteturn) ||
+    (!isBlackincheck && !isBlacklegalMove && noBlackPiece && blackturn);
   }
 
   function pawninactivity(){
-    return ((!isWhiteincheck && !isWhitelegalMove && !whiteknight && !whiterook &&
+    return ((whiteturn && !isWhiteincheck && !isWhitelegalMove && !whiteknight && !whiterook &&
             !whitebishop && !whitequeen && whitepawninactivity && !whitepawn_left && !whitepawn_right)
           ) ||
-          ((!isBlackincheck && !isBlacklegalMove && !blackknight && !blackrook &&
+          ((blackturn && !isBlackincheck && !isBlacklegalMove && !blackknight && !blackrook &&
             !blackbishop && !blackqueen && blackpawninactivity && !blackpawn_left && !blackpawn_right)
           )
   }
@@ -360,67 +364,46 @@ let noBlackPiece = !blackpawn && !blackknight && !blackrook && !blackbishop && !
     return noCapture == 50;
   }
   function insufficientMaterial(){
+    let image = "../pieces_Img/insuffdraw.png";
+    resultframe("#a0a0a0","Draw","by insufficient material",image);
     stalemateaudio.play();
-    result_from.style.display = "flex";
-    resultcolor.style.backgroundColor = "#a0a0a0";
-    result.textContent = "Draw";
-    reason.textContent = "by insufficient material";
-    resultImage.src = "../pieces_Img/insuffdraw.png";
   }
   function stale(){
+    let image = "../pieces_Img/drawimage.png";
+    resultframe("#a0a0a0","Draw","by Stalemate",image);
     stalemateaudio.play();
-    result_from.style.display = "flex";
-    resultcolor.style.backgroundColor = "#a0a0a0";
-    result.textContent = "Draw";
-    reason.textContent = "by Stalemate";
-    resultImage.src = "../pieces_Img/drawimage.png";
   }
   
   if(noPieceExceptKing()){
     insufficientMaterial();
-    gameOver();
   }
   if(loneKingvsKing_Knight()){
     insufficientMaterial();
-    gameOver();
   }
   if(loneKingvsKing_bishop()){
     insufficientMaterial();
-    gameOver();
   }
   if(king_knightvsKing_knight()){
     insufficientMaterial();
-    gameOver();
   }
   if(king_bishopvsKing_bishop()){
     insufficientMaterial();
-    gameOver();
   }
   if(noLegalMoveforKing()){
     stale();
-    gameOver();
   }
   if(pawninactivity()){
     stale();
-    gameOver();
   }
   if(noPieceTaken()){
+    let image = "../pieces_Img/50move.png";
+    resultframe("#a0a0a0","Draw","by 50 Rules Move",image);
     gameover.play()
-    result_from.style.display = "flex";
-    resultcolor.style.backgroundColor = "#a0a0a0";
-    result.textContent = "Draw";
-    reason.textContent = "by 50 Rules Move";
-    resultImage.src = "../pieces_Img/drawimage.png";
-    gameOver();
   }
   if(repetitativeMove()){
+    let image = "../pieces_Img/repetative.png";
+    resultframe("#a0a0a0","Draw","by repetitative move",image);
     gameover.play();
-    result_from.style.display = "flex";
-    resultcolor.style.backgroundColor = "#a0a0a0";
-    result.textContent = "Draw";
-    reason.textContent = "by repetitative move";
-    resultImage.src = "../pieces_Img/drawimage.png";
-    gameOver();
   }
   
   let whiteAttackorBlock = whitecheckBlocker();
@@ -434,21 +417,13 @@ let noBlackPiece = !blackpawn && !blackknight && !blackrook && !blackbishop && !
   }
 
   if(whiteCheckmate()){
+    let image = "../pieces_Img/mateicon.png";
+    resultframe("rgb(11, 220, 98)","Black Won","by Checkmate",image);
     Checkmate.play();
-      result_from.style.display = "flex";
-      resultcolor.style.backgroundColor = "rgb(11, 220, 98);";
-      result.textContent = "Black Won";
-      reason.textContent = "by Checkmate";
-      resultImage.src = "../pieces_Img/mateicon.png";
-      gameOver();
   }
   if(blackCheckmate()){
+    let image = "../pieces_Img/mateicon.png";
+    resultframe("rgb(11, 220, 98)","White Won","by Checkmate",image);
     Checkmate.play();
-      result_from.style.display = "flex";
-      resultcolor.style.backgroundColor = "rgb(11, 220, 98);";
-      result.textContent = "White Won";
-      reason.textContent = "by Checkmate";
-      resultImage.src = "../pieces_Img/mateicon.png";
-      gameOver();
   }
 }
