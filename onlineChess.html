@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>chess.com</title>
-    <link rel="icon" href="pieces_Img/chesswebicon.png" type="/image/png">
-    <link rel="stylesheet" href="online_chess/onlineChess.css">
+    <link rel="icon" href="/pieces_Img/chesswebicon.png" type="/image/png">
+    <link rel="stylesheet" href="/online_chess/onlineChess.css">
 </head>
 <body>
     <!-- _______________________________ Entry _______________________________ -->
     <div id="entry">
         <div class="gameCreation">
-            <img src="pieces_Img/gamestart.png" id="gamestart" alt="">
+            <img src="/pieces_Img/gamestart.png" id="gamestart" alt="">
             <div class="container">
                 <div>
                     <input type="text" name="code" id="code" placeholder="Enter the exists game code" 
@@ -30,27 +30,27 @@
         <div class="gameCreation">
                 <div class="container">
                     <div class="newheading">
-                        <img id="newgame" src="pieces_Img/newgame.png" alt="">
+                        <img id="newgame" src="/pieces_Img/newgame.png" alt="">
                         <p>Select Mode</p>
                     </div>
                     <button class="btn" name="mode" value="N" onclick="modeSelect(this)">
-                        <span><img src="pieces_Img/notimer.png" class="btnimg"></span>
+                        <span><img src="/pieces_Img/notimer.png" class="btnimg"></span>
                         <span class="btntext notime">NO TIME</span>
                     </button> 
                     <button class="btn" name="mode" value="3" onclick="modeSelect(this)">
-                        <span><img src="pieces_Img/bullet.png" class="btnimg"></span>
+                        <span><img src="/pieces_Img/bullet.png" class="btnimg"></span>
                         <span class="btntext">3 MIN</span> 
                     </button> 
                     <button class="btn" name="mode" value="5" onclick="modeSelect(this)">
-                        <span><img src="pieces_Img/blitz.png" class="btnimg"></span>
+                        <span><img src="/pieces_Img/blitz.png" class="btnimg"></span>
                         <span class="btntext">5 MIN</span> 
                     </button> 
                     <button class="btn" name="mode" value="10" onclick="modeSelect(this)">
-                        <span><img src="pieces_Img/stopwatch.png" class="btnimg"></span>
+                        <span><img src="/pieces_Img/stopwatch.png" class="btnimg"></span>
                         <span class="btntext">10 MIN</span> 
                     </button> 
                     <button class="btn" name="mode" value="15" onclick="modeSelect(this)">
-                        <span><img src="pieces_Img/stopwatch.png" class="btnimg"></span>
+                        <span><img src="/pieces_Img/stopwatch.png" class="btnimg"></span>
                         <span class="btntext">15 MIN</span> 
                     </button> 
                 </div>
@@ -66,17 +66,19 @@
             <div class="skeleton-frame clstimer timer-2"></div>
         </div>
         <div class="codeviewer">
+          <p class="notify heading">Waiting for player</p>
           <p class="notify para">
-            In this online mode you will not connect player randomly your friend must enter the code to play
-        </p>
-        <p class="notify code">
-            Estimated time : 1 minute <br>
-            Here your code :
-        </p>
-        <p class="notify code-mod">
-            code
-        </p>
+             Online mode is for friends only—no randoms. Just share the code to join.
+          </p>
+          <p class="notify code">
+             Estimated time : 1 minute <br>
+             Here your code :
+          </p>
+            <p class="notify code-mod">
+                code
+            </p>
         </div>
+    </div>
     </div>
     <!-- _______________________________ chessboard frame _______________________________ -->
     <div id="board">
@@ -85,11 +87,11 @@
             <div id="chessboard"></div>
             <div class="Whitecapture"></div>
             <div class="clstimer blacktimer">
-                <img class ="timer" src="pieces_Img/timericon.png" alt="">
+                <img class ="timer" src="/pieces_Img/timericon.png" alt="">
                 <span class="black-time">-- : --</span>
             </div>
             <div class="clstimer whitetimer">
-                <img class ="timer" src="pieces_Img/timericon.png" alt="">
+                <img class ="timer" src="/pieces_Img/timericon.png" alt="">
                 <span class="white-time">-- : --</span>
             </div>
             <button class="playagain" onclick="resetgame()" >play again?</button>
@@ -133,5 +135,5 @@
     </div>
 </body>
 <script src="/socket.io/socket.io.js"></script>
-<script src="online_chess/onlineChess.js" type="module"></script>
+<script src="/online_chess/onlineChess.js" type="module"></script>
 </html>
