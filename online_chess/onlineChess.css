@@ -211,24 +211,37 @@ input::placeholder{
     width: 40%;
     height: 40vh;
 }
+#waiting .heading{
+    position: absolute;
+    top: -5%;
+    border-radius: 10px;
+    background-color: #2a2f33;
+    padding: 2%;
+    box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.4);
+}
 #waiting .para{
     position: absolute;
+    top: 15%;
     left: 7%;
 }
 #waiting .code{
     position: absolute;
-    top: 35%;
+    top: 40%;
 
 }
 #waiting .code-mod{
     position: absolute;
-    top: 60%;
+    top: 65%;
+    box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    padding: 2%;
 }
 #waiting .notify{
     color: aliceblue;
     font-size: x-large;
     font-family: sans-serif;
     font-weight: 600;
+    text-shadow: 5px 5px 5px rgba(11, 9, 9, 0.5);
 }
 
 /* ____________________________________ chessboard start _________________________________________ */
@@ -738,7 +751,7 @@ input::placeholder{
     #waiting .para{
         position: absolute;
         left: 5%;
-        top: 10%;
+        top: 15%;
     }
 
 /* __________________________________________ chessboard view _____________________________________ */
