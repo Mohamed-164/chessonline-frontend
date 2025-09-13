@@ -5,7 +5,7 @@ import { gameover, preloadAllSounds } from "./preloadsound_o.js";
 import { capture,move,castling } from "./preloadsound_o.js";
 import { gameState,BlackCapturedPiece,WhiteCapturedPiece } from "./mainChess_o.js";
 
-export const socket = io();
+export const socket = io("https://chessonline-backend.onrender.com");
 
 export let duration = null;
 export let color = null;
@@ -118,3 +118,4 @@ socket.on('connect_timeout',() =>{
 socket.on('gameNotExists',() =>{
     window.location.href = '/invalid.html';
 });
+
