@@ -1,6 +1,6 @@
 body{
-    overflow: hidden;
     background-color: #202020;
+    user-select: none;
     width: 100vw;
     height: 100vh;
     margin: 0;
@@ -43,6 +43,7 @@ body{
     border-radius: 50px;
     outline: none;
     border: none;
+    user-select: none;
     color: aliceblue;
     font-size: xx-large;
     font-family: sans-serif;
@@ -112,6 +113,7 @@ input::placeholder{
 #mode-select .btn{
     position: relative;
     outline: none;
+    user-select: none;
     border: none;
     width: 90%;
     height: 12%;
@@ -204,16 +206,17 @@ input::placeholder{
     display: flex;
     flex-direction: column;
     align-items: center;
-    top: 30%;
+    top: 20%;
     left: 30%;
     background-color: #545353;
     border-radius: 50px;
     width: 40%;
-    height: 40vh;
+    height: 60vh;
 }
 #waiting .heading{
     position: absolute;
-    top: -5%;
+    user-select: none;
+    top: 0%;
     border-radius: 10px;
     background-color: #2a2f33;
     padding: 2%;
@@ -221,17 +224,19 @@ input::placeholder{
 }
 #waiting .para{
     position: absolute;
-    top: 15%;
+    user-select: none;
+    top: 18%;
     left: 7%;
 }
 #waiting .code{
     position: absolute;
-    top: 40%;
+    user-select: none;
+    top: 55%;
 
 }
 #waiting .code-mod{
     position: absolute;
-    top: 65%;
+    top: 70%;
     box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.3);
     border-radius: 10px;
     padding: 2%;
@@ -313,6 +318,7 @@ input::placeholder{
 }
 #board .promotion{
     display: none;
+    user-select: none;
     position: relative;
     background-color: rgba(127, 236, 255, 0.795);
     width:30%;
@@ -441,6 +447,26 @@ input::placeholder{
     height: auto;
     display: flex;
     gap: 5%;
+}
+.dot {
+  font-size: xx-large;
+  opacity: 0;
+  animation: blink 1.5s infinite;
+}
+
+.dot:nth-of-type(1) {
+  animation-delay: 0s;
+}
+.dot:nth-of-type(2) {
+  animation-delay: 0.3s;
+}
+.dot:nth-of-type(3) {
+  animation-delay: 0.6s;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
 }
 
 
@@ -646,7 +672,10 @@ input::placeholder{
 @media (min-width: 300px) and (max-width: 500px) {
 
 /* ___________________________________________ Entry _____________________________________ */
-
+#entry{
+    position: relative;
+    top: -5%;
+}
 .gameCreation{
     width: 90%;
     height: 60vh;
@@ -661,7 +690,7 @@ input::placeholder{
     flex-direction: column;
     gap: 15%;
 }
-.btn{
+#entry .btn{
     font-size: x-large;
 }
 input::placeholder{
@@ -742,7 +771,7 @@ input::placeholder{
         left: 2%;
         padding: 2%;
         width: 90%;
-        height: 35vh;
+        height: 45vh;
     }
     #waiting .notify{
         text-align: left;
@@ -753,12 +782,20 @@ input::placeholder{
         left: 5%;
         top: 15%;
     }
-
+    #waiting .code{
+        top: 60%;
+    }
+    #waiting .code-mod{
+        top: 75%;
+    }
+    #waiting .dot {
+        font-size: x-large;
+    }
 /* __________________________________________ chessboard view _____________________________________ */
 
 #board{
     position: relative;
-    top: 10%;
+    top: 5%;
 }
 #board .game-layout{
     top: 5%;
@@ -864,11 +901,12 @@ input::placeholder{
     outline: none;
     border: none;
     position: absolute;
+    top: 20%;
     font-size: 180%;
     background-color: #475057;
     color: rgb(255, 255, 255);
-    width: 170%;
-    height: 115%;
+    width: 130%;
+    height: 100%;
     border-radius: 10px; 
 }
 #board .home-link {
@@ -895,11 +933,11 @@ input::placeholder{
 }
 #board .white-text{
     position: absolute;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     font-family: sans-serif;
     font-weight: 800;
-    top: 85%;
-    left: 30%;
+    top: 100%;
+    left: 15%;
     width: auto;
     height: 100%;
     color: white;
