@@ -9,6 +9,7 @@
 <style>
 body{
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     background-color: #202020;
@@ -16,11 +17,21 @@ body{
     height: 100vh;
     margin: 0;
 }
+.logo{
+    width: 70%;
+    height: 30%;
+}
+#mylogo{
+    object-fit: contain;
+    width: 100%;
+    height: 100%;
+}
 .gameCreation{
     position: relative;
     display: flex;
     align-items: center;
     flex-direction: column;
+    top: -5%;
     width: 40%;
     height: 80vh;
     background-color: #565353;
@@ -41,6 +52,7 @@ body{
     height: 10vh;
     background-color: rgb(111, 254, 135);
     border-radius: 50px;
+    user-select: none;
     outline: none;
     border: none;
     color: aliceblue;
@@ -60,13 +72,20 @@ body{
 body{
     height: 90vh;
 }
+.btn{
+    font-size: x-large;
+}
 .gameCreation{
+    top: -5%;
     width: 90%;
     height: 60vh;
 }
 }
 </style>
 <body>
+    <div class="logo">
+        <img id="mylogo" src="/pieces_Img/logo.png" alt="">
+    </div>
     <div class="gameCreation">
         <img src="/pieces_Img/gamestart.png" id="gamestart" alt="">
         <div class="container">
@@ -79,4 +98,5 @@ body{
         </div>
     </div>
 </body>
+
 </html>
