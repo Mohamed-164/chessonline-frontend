@@ -36,7 +36,7 @@ export let gameState = [];
 
 let gamefinish = false;
 
-let Timer = null;
+export let Timer = null;
 
 export class gamemove {
   constructor(mycolor, code, pastrow, pastcol, currentrow, currentcol) {
@@ -175,10 +175,6 @@ function handler() {
   let {
     whitestartTimer,
     blackstartTimer,
-    whitepauseTimer,
-    whiteresumeTimer,
-    blackresumeTimer,
-    blackpauseTimer,
   } = Timer;
   if (gameState.length < 1) {
     blackClickDiable();
@@ -192,8 +188,7 @@ function handler() {
     }
   }
   if (gameState.length > 0) {
-    let last = gameState.length - 1;
-    let [piece, currentrow, currentcol, pastrow, pastcol] = gameState[last];
+    let [piece, currentrow, currentcol, pastrow, pastcol] = gameState.at(-1);
     let piececolor = piece === piece.toUpperCase() ? true : false;
     let pastcell = document.querySelector(
       `.cell[data-row="${pastrow}"][data-col="${pastcol}"]`
@@ -204,17 +199,9 @@ function handler() {
     pastcell.classList.add("pasthighlight");
     currentcell.classList.add("currenthighlight");
     if (piececolor) {
-      if (duration && !gamefinish) {
-        blackresumeTimer();
-        whitepauseTimer();
-      }
       whiteClickDisable();
     } else {
       blackClickDiable();
-      if (duration && !gamefinish) {
-        whiteresumeTimer();
-        blackpauseTimer();
-      }
     }
   }
 }
