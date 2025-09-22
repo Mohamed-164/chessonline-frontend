@@ -42,6 +42,7 @@ function modeSelect(event){
 
 socket.on('code',(code_Mod) => {
   code.textContent = code_Mod;
+  code.style.color = "#006989";
   header.textContent = "player"
 });
 
@@ -160,4 +161,5 @@ socket.on('connect_timeout',() =>{
 socket.on('gameNotExists',() =>{
     window.location.href = '/invalid.html';
 });
+
 
