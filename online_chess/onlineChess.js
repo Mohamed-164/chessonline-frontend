@@ -1,15 +1,16 @@
 import { board } from "./boarddata_o.js";
-import { renderboard } from "./mainChess_o.js";
+import { renderboard,Timer } from "./mainChess_o.js";
 import { resultframe } from "./StalemateDetection_o.js";
 import { gameover, preloadAllSounds } from "./preloadsound_o.js";
 import { capture,move,castling } from "./preloadsound_o.js";
 import { gameState,BlackCapturedPiece,WhiteCapturedPiece } from "./mainChess_o.js";
 
-export const socket = io("https://chessonline-backend.onrender.com");
+export const socket = io();
 
 export let duration = null;
 export let color = null;
 export let gamecode = null; 
+
 
 const entry = document.getElementById('entry');
 const mode_Select = document.getElementById('mode-select');
@@ -17,6 +18,7 @@ const waiting = document.getElementById('waiting');
 const gameboard = document.getElementById('board');
 const code = document.querySelector('.code-mod');
 const ExistsGame = document.getElementById('code');
+const header = document.querySelector('.head');
 
 function gameCode(){
   let userCode =  String(ExistsGame.value);
@@ -40,6 +42,7 @@ function modeSelect(event){
 
 socket.on('code',(code_Mod) => {
   code.textContent = code_Mod;
+  header.textContent = "player"
 });
 
 window.gameCode = gameCode;
@@ -51,12 +54,48 @@ socket.on('boardSetup',(setupdata) => {
   if(!isNaN(setupdata.mode)){
     duration = 1000*60*setupdata.mode;
   }
+  
   color = setupdata.color;
   gamecode = setupdata.code;
-    renderboard(board,false);
-    entry.style.display = "none";
-    waiting.style.display = "none";
-    gameboard.style.display = "block";
+  renderboard(board);
+  entry.style.display = "none";
+  waiting.style.display = "none";
+  gameboard.style.display = "block";
+});
+
+socket.on('pausetimer',() =>{
+  let {
+    whitepauseTimer,
+    blackpauseTimer,
+    whiteresumeTimer,
+    blackresumeTimer
+  } = Timer;
+  if(color == "white"){
+    whitepauseTimer();
+    blackresumeTimer();
+  }else if(color == "black"){
+    blackpauseTimer();
+    whiteresumeTimer();
+  }
+});
+
+socket.on('resumeTimer',() => {
+  let {
+    whitepauseTimer,
+    whiteresumeTimer,
+    blackresumeTimer,
+    blackpauseTimer,
+  } = Timer;
+  if(color == "white"){
+    blackpauseTimer();
+    whiteresumeTimer();
+  }else if(color == "black"){
+    if(gameState.length > 2){
+      blackresumeTimer();
+    }
+    whitepauseTimer();
+  }
+
 });
 
 socket.on('move',(moveData) => {
@@ -74,6 +113,9 @@ socket.on('move',(moveData) => {
    if(to == ''){
     move.play();
    }
+
+  console.log(moveData.whitetime);
+
     board[toRow][toCol] = board[fromRow][fromCol];
     board[fromRow][fromCol] = '';
 
@@ -118,4 +160,3 @@ socket.on('connect_timeout',() =>{
 socket.on('gameNotExists',() =>{
     window.location.href = '/invalid.html';
 });
-
