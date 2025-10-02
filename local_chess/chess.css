@@ -1,5 +1,4 @@
 body{
-    overflow: hidden;
     background-color: #202020;
     width: 100vw;
     height: 100vh;
@@ -427,7 +426,7 @@ body{
     height: 50%;
 }
 .game-layout{
-    top: 5%;
+    top: 10%;
     position: relative;
     display: none;
     grid-template-rows: 5% 5% 0.5fr 5% 5% 5%;
@@ -520,8 +519,8 @@ body{
     position: absolute;
     font-size: 180%;
     top: -35%;
-    width: 170%;
-    height: 110%;
+    width: 130%;
+    height: 100%;
     transform: rotate(180deg);
     border-radius: 10px;
     background-color: #6e96bfff;
@@ -529,7 +528,7 @@ body{
 .black-text{
     position: absolute;
     top: -90%;
-    left: 30%;
+    left: 25%;
     font-size: small;
     font-family: sans-serif;
     font-weight: 800;
@@ -563,11 +562,12 @@ body{
     outline : none;
     border : none;
     position: absolute;
+    top: 20%;
     font-size: 180%;
     background-color: rgb(151, 229, 250);
     color: rgb(255, 255, 255);
-    width: 170%;
-    height: 115%;
+    width: 130%;
+    height: 100%;
     border-radius: 10px; 
 }
 .white-text{
@@ -575,8 +575,8 @@ body{
     font-size: 0.8rem;
     font-family: sans-serif;
     font-weight: 800;
-    top: 85%;
-    left: 30%;
+    top: 100%;
+    left: 20%;
     width: auto;
     height: 100%;
     color: white;
