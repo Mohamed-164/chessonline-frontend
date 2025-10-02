@@ -1,21 +1,16 @@
-import { color, gamecode, socket } from "./onlineChess.js";
-import { board } from "./boarddata_o.js";
-import { move, capture } from "./preloadsound_o.js";
-import { iskinginCheck } from "./checkDetection_o.js";
-import {
-  renderboard,
-  gameState,
-  WhiteCapturedPiece,
-  gamemove,
-} from "./mainChess_o.js";
-import { isPiecePinned } from "./pinnedPieces_o.js";
+import { gameState, WhiteCapturedPiece } from "./mainChess.js";
+import { move, capture } from "./preloadsound.js";
+import { board } from "./boarddata.js";
+import { iskinginCheck } from "./checkDetection.js";
+import { renderboard } from "./mainChess.js";
+import { isPiecePinned } from "./pinnedPieces.js";
 import {
   whitepawnlocation,
   whiteKnightloaction,
   whiterookORqueenlocation,
   whiteBishopORqueenlocation,
-} from "./blackPathDetection_o.js";
-import { clearHighlights } from "./mainChess_o.js";
+} from "./blackPathDetection.js";
+import { clearHighlights } from "./mainChess.js";
 
 /* ********************** function thats help to block check for white ************************* */
 
@@ -33,7 +28,7 @@ export function whitecheckBlocker() {
     white_Knightleft_down,
   } = whiteKnightloaction();
 
-  let {whitethreadposition, DistanceBetweenWhite } =
+  let { isWhiteincheck, whitethreadposition, DistanceBetweenWhite } =
     iskinginCheck();
   let {
     white_rookQueenup,
@@ -168,157 +163,188 @@ export function whitecheckBlocker() {
     let { Attackerposition } = whiteAttacker();
     whiteblockers = blockposition.length > 0 ? true : false;
     whiteAttackers = Attackerposition.length > 0 ? true : false;
-    function checkerPath() {
-      if (whitethreadposition.length > 0 && whitethreadposition !== undefined) {
-        let piece_onlyAttack = [];
-        let piece_Bothability = [];
-        if (blockposition.length > 0) {
-          for (let i = 0; i < blockposition.length; i++) {
-            let locationOfPiece = { row: null, col: null };
-            let [r, c, x, y] = blockposition[i];
-            locationOfPiece.row = r;
-            locationOfPiece.col = c;
-            let blockArray = [[x, y]];
-            if (Attackerposition.length > 0) {
-              for (let j = 0; j < Attackerposition.length; j++) {
-                let [ar, ac, tr, tc] = Attackerposition[j];
-                if (ar == r && ac == c) {
-                  piece_Bothability.push([tr, tc]);
-                } else {
-                  piece_onlyAttack.push([ar, ac, tr, tc]);
-                }
-              }
-            }
-            for (let j = 0; j < blockposition.length; j++) {
-              let [a, b, e, d] = blockposition[j];
-              if (a == r && b == c && (e !== x || d !== y)) {
-                let block = [e, d];
-                blockArray.push(block);
-              }
-            }
-            let clickedPiece = board[locationOfPiece.row][locationOfPiece.col];
-            let threadblocker = document.querySelector(
-              `.cell[data-row="${locationOfPiece.row}"][data-col="${locationOfPiece.col}"]`
-            );
-            let Attacker;
-            let Attackrow;
-            let Attackcol;
-            if (piece_Bothability.length > 0) {
-              let [attackrow, attackcol] = piece_Bothability[0];
-              Attackrow = attackrow;
-              Attackcol = attackcol;
-              Attacker = document.querySelector(
-                `.cell[data-row="${attackrow}"][data-col="${attackcol}"]`
-              );
-            }
-            let blockplacer = [];
-            for (let k = 0; k < blockArray.length; k++) {
-              let [br, bc] = blockArray[k];
-              blockplacer[k] = document.querySelector(
-                `.cell[data-row="${br}"][data-col="${bc}"]`
-              );
-            }
-            threadblocker.onclick = () => {
-              clearHighlights();
-              if (Attacker) {
-                Attacker.classList.add("AttackHighlight");
-                Attacker.onclick = () => {
-                  gameState.push([clickedPiece, Attackrow, Attackcol, r, c]);
-                  let capturepiece = board[Attackrow][Attackcol];
-                  WhiteCapturedPiece.push(capturepiece);
-                  let captureobj = {
-                    code: gamecode,
-                    mycolor: color,
-                    color: "white",
-                    captured: capturepiece,
-                  };
-                  socket.emit("capture", captureobj);
-                  let moveData = new gamemove(
-                    color,
-                    gamecode,
-                    r,
-                    c,
-                    Attackrow,
-                    Attackcol
-                  );
-                  socket.emit("move", moveData);
-                  board[Attackrow][Attackcol] = board[r][c];
-                  board[r][c] = "";
-                  capture.play();
-                  clearHighlights();
-                  renderboard(board);
-                };
-              }
-              blockplacer.forEach((el) => {
-                el.classList.add("highlighted");
-                el.onclick = () => {
-                  const row = parseInt(el.dataset.row);
-                  const col = parseInt(el.dataset.col);
-                  gameState.push([clickedPiece, row, col, r, c]);
-                  let moveData = new gamemove(color, gamecode, r, c, row, col);
-                  socket.emit("move", moveData);
-                  board[row][col] = board[r][c];
-                  board[r][c] = "";
-                  move.play();
-                  clearHighlights();
-                  renderboard(board);
-                };
-              });
-            };
+    let piece_onlyAttack = [];
+    let piece_onlyBlock = [];
+    let piece_Bothability = [];
+
+
+    if(whiteAttackers || whiteblockers){
+      if(Attackerposition.length > 0 && blockposition.length > 0){
+        for(let i = 0; i < blockposition.length; i++){
+         let [piecerow,piececol,blockrow,blockcol] = blockposition[i];
+         for(let j = 0; j < Attackerposition.length; j++){
+          let[AttackerRow,AttackerCol,threadRow,threadcol] = Attackerposition[j];
+          if(AttackerRow == piecerow && AttackerCol == piececol){
+            piece_Bothability.push([piecerow,piececol,blockrow,blockcol]);
           }
+         }
         }
-        let Attackerpiece = [];
-        if (Attackerposition.length > 0 && piece_Bothability.length > 0) {
-          for (let i = 0; i < Attackerposition.length; i++) {
-            for (let j = 0; j < piece_Bothability.length; j++) {
-              let [r, c, x, y] = Attackerposition[i];
-              let [a, b] = piece_Bothability[j];
-              if (x !== a && c !== y) {
-                Attackerpiece.push([r, c, x, y]);
+      }
+
+      if(blockposition.length > 0){
+        if(piece_Bothability.length > 0){
+          for(let i = 0; i < blockposition.length; i++){
+            let [piecerow,piececol,blockrow,blockcol] = blockposition[i];
+            for(let j = 0; j < piece_Bothability.length; j++){
+              let [bothrow,bothcol,bothx,bothy] = piece_Bothability[j];
+              if(piecerow !== bothrow && piececol !== bothcol){
+                piece_onlyBlock.push([piecerow,piececol,blockrow,blockcol]);
               }
             }
           }
-        } else if (Attackerposition.length > 0) {
-          Attackerpiece = Attackerposition;
+        }else{
+          piece_onlyBlock = blockposition;
         }
-        if (Attackerpiece.length > 0) {
-          for (let i = 0; i < Attackerpiece.length; i++) {
-            let [a, b, x, y] = Attackerpiece[i];
-            let Attacker = document.querySelector(
-              `.cell[data-row="${a}"][data-col="${b}"]`
-            );
-            let threadplace = document.querySelector(
-              `.cell[data-row="${x}"][data-col="${y}"]`
-            );
-            let clickedPiece = board[a][b];
-            let locationOfPiece = { row: a, col: b };
-            Attacker.onclick = () => {
-              threadplace.classList.add("AttackHighlight");
-              threadplace.onclick = () => {
-                gameState.push([clickedPiece, x, y, a, b]);
-                let capturedpiece = board[x][y];
-                WhiteCapturedPiece.push(capturedpiece);
-                let captureobj = {
-                  code: gamecode,
-                  mycolor: color,
-                  color: "white",
-                  captured: capturedpiece,
-                };
-                socket.emit("capture", captureobj);
-                let moveData = new gamemove(color, gamecode, a, b, x, y);
-                socket.emit("move", moveData);
-                board[x][y] = board[a][b];
-                board[a][b] = "";
-                capture.play();
+      }
+
+      if(Attackerposition.length > 0){
+        if(piece_Bothability.length > 0){
+          for(let i = 0; i < Attackerposition.length; i++){
+            let [AttackerRow,AttackerCol,threadRow,threadcol] = Attackerposition[i];
+            for(let j = 0; j < piece_Bothability; j++){
+              let [bothrow,bothcol,bothx,bothy] = piece_Bothability[j];
+              if(AttackerRow !== bothrow && AttackerCol !== bothcol){
+                piece_onlyAttack.push([bothrow,bothcol]);
+              }
+            }
+          }
+        }else{
+          piece_onlyAttack = Attackerposition;
+        }
+      }
+    }
+
+    function bothAbility(){
+      for(let i = 0; i < piece_Bothability.length; i++){
+        let blockerArray = [];
+        let blockplacer = [];
+        let [bkrow,bkcol,x,y] = piece_Bothability[i];
+
+        for(let j = 0; j < piece_Bothability.length; j++){
+          let [piecerow,piececol,r,c] = piece_Bothability[j];
+          if(bkrow == piecerow && bkcol == piececol){
+            blockerArray.push([bkrow,bkcol,r,c]);
+          }
+        }
+        let threadremover = 
+        document.querySelector(`.cell[data-row="${bkrow}"][data-col="${bkcol}"]`);
+        let threadplace = 
+        document.querySelector(`.cell[data-row="${threadrow}"][data-col="${threadcol}"]`);
+        
+        if(blockerArray.length > 0){
+          for(let k = 0; k < blockerArray.length; k++){
+            let [brow,bcol,r,c] = blockerArray[k];
+            blockplacer[k] = document.querySelector(`.cell[data-row="${r}"][data-col="${c}"]`);
+          }
+        }
+
+        threadremover.onclick = () =>{
+          clearHighlights();
+          threadplace.classList.add("AttackHighlight");
+
+          let clickedPiece = board[bkrow][bkcol];
+          threadplace.onclick = () =>{
+            gameState.push([clickedPiece,threadrow,threadcol,bkrow,bkcol]);
+            let capturedpiece = board[threadrow][threadcol];      
+            WhiteCapturedPiece.push(capturedpiece);
+            board[threadrow][threadcol] = board[bkrow][bkcol];
+            board[bkrow][bkcol] = "";
+            capture.play();
+            clearHighlights();
+            renderboard(board);
+          }
+          blockplacer.forEach((el) => {
+            el.classList.add("highlighted");
+            el.onclick = () => {
+               const brow = parseInt(el.dataset.row);
+               const bcol = parseInt(el.dataset.col);
+                gameState.push([clickedPiece, brow, bcol, bkrow, bkcol]);
+                board[brow][bcol] = board[bkrow][bkcol];
+                board[bkrow][bkcol] = "";
+                move.play();
                 clearHighlights();
                 renderboard(board);
-              };
-            };
+            }
+          });
+        }
+      }
+    }
+
+    function onlyBlock(){
+      for(let i = 0; i < piece_onlyBlock.length; i++){
+        let blockerArray = [];
+        let blockplacer = [];
+        let [bkrow,bkcol,x,y] = piece_onlyBlock[i];
+
+        for(let j = 0; j < piece_onlyBlock.length; j++){
+          let [piecerow,piececol,r,c] = piece_onlyBlock[j];
+          if(bkrow == piecerow && bkcol == piececol){
+            blockerArray.push([bkrow,bkcol,r,c]);
+          }
+        }
+        let threadblocker = 
+        document.querySelector(`.cell[data-row="${bkrow}"][data-col="${bkcol}"]`);
+        
+        if(blockerArray.length > 0){
+          for(let k = 0; k < blockerArray.length; k++){
+            let [brow,bcol,r,c] = blockerArray[k];
+            blockplacer[k] = document.querySelector(`.cell[data-row="${r}"][data-col="${c}"]`);
+          }
+        }
+
+        threadblocker.onclick = () =>{
+          clearHighlights();
+          let clickedPiece = board[bkrow][bkcol];
+
+          blockplacer.forEach((el) => {
+            el.classList.add("highlighted");
+            el.onclick = () => {
+               const brow = parseInt(el.dataset.row);
+               const bcol = parseInt(el.dataset.col);
+                gameState.push([clickedPiece, brow, bcol, bkrow, bkcol]);
+                board[brow][bcol] = board[bkrow][bkcol];
+                board[bkrow][bkcol] = "";
+                move.play();
+                clearHighlights();
+                renderboard(board);
+            }
+          });
+        }
+      }
+    }
+
+    function onlyAttack(){
+      for(let i = 0; i < piece_onlyAttack.length; i++){
+        let [row,col] = piece_onlyAttack[i];
+        let clickedPiece = board[row][col];
+        let threadremover = 
+        document.querySelector(`.cell[data-row="${row}"][data-col="${col}"]`);
+        let threadplace = 
+        document.querySelector(`.cell[data-row="${threadrow}"][data-col="${threadcol}"]`);
+        threadremover.onclick = () => {
+          threadplace.classList.add("AttackHighlight");
+          threadplace.onclick = () => {
+            gameState.push([clickedPiece,threadrow,threadcol,row,col]);
+            let capturedpiece = board[threadrow][threadcol];      
+            WhiteCapturedPiece.push(capturedpiece);
+            board[threadrow][threadcol] = board[row][col];
+            board[row][col] = "";
+            capture.play();
+            renderboard(board);
           }
         }
       }
     }
-    checkerPath();
+
+if(piece_Bothability.length > 0){
+  bothAbility();
+}
+if(piece_onlyBlock.length > 0){
+  onlyBlock();
+}
+if(piece_onlyAttack.length > 0){
+  onlyAttack();
+}
   }
 
   return whiteAttackers || whiteblockers;
