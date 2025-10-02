@@ -577,7 +577,7 @@ export function blackpawnlocation(){
    let enblockrow = pawnRow + 2;
    let enblockcol = pawnCol;
    let enpassent = [pawnRow,pawnCol,enblockrow,enblockcol];
-   if(board[enblockrow][enblockcol] == ''){
+   if(board[downrow][downcol] == '' && board[enblockrow][enblockcol] == ''){
      black_enpassent.push(enpassent);
    }
  }
@@ -807,4 +807,5 @@ rookandqueenthread();
 bishopandqueenthread(); 
 
 return pathflag;
+
 }
