@@ -576,7 +576,7 @@ if(pawnRow == 6){
   let enblockrow = pawnRow - 2;
   let enblockcol = pawnCol;
   let enMove = [pawnRow,pawnCol,enblockrow,enblockcol];
-  if(board[enblockrow][enblockcol] == ''){
+  if(board[uprow][upcol] == '' && board[enblockrow][enblockcol] == ''){
     white_enpassent.push(enMove);
   }
 }
@@ -802,3 +802,4 @@ rookandqueenthread();
 bishopandqueenthread(); 
 return pathflag;
 }
+
