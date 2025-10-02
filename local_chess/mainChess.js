@@ -148,18 +148,18 @@ function capturedpieceshown() {
 
 function pieceImagePath(piece) {
     const map = {
-        'P': '../pieces_Img/whitePawn.png',
-        'p': '../pieces_Img/blackPawn.png',
-        'R': '../pieces_Img/whiteRook.png',
-        'r': '../pieces_Img/blackRook.png',
-        'N': '../pieces_Img/whiteKnight.png',
-        'n': '../pieces_Img/blackKnight.png',
-        'B': '../pieces_Img/whiteBishop.png',
-        'b': '../pieces_Img/blackBishop.png',
-        'Q': '../pieces_Img/whiteQueen.png',
-        'q': '../pieces_Img/blackQueen.png',
-        'K': '../pieces_Img/whiteKing.png',
-        'k': '../pieces_Img/blackKing.png',
+        'P': '/pieces_Img/whitePawn.png',
+        'p': '/pieces_Img/blackPawn.png',
+        'R': '/pieces_Img/whiteRook.png',
+        'r': '/pieces_Img/blackRook.png',
+        'N': '/pieces_Img/whiteKnight.png',
+        'n': '/pieces_Img/blackKnight.png',
+        'B': '/pieces_Img/whiteBishop.png',
+        'b': '/pieces_Img/blackBishop.png',
+        'Q': '/pieces_Img/whiteQueen.png',
+        'q': '/pieces_Img/blackQueen.png',
+        'K': '/pieces_Img/whiteKing.png',
+        'k': '/pieces_Img/blackKing.png',
     };
     return map[piece] || null;
 }
@@ -198,8 +198,6 @@ function initializetimer(){
 }
 
 function handler(){
-
-  console.log(gameState)
   if(Timer == null){
     initializetimer();
   }
@@ -212,10 +210,12 @@ function handler(){
     const chessboard = document.getElementById('chessboard');
     const blackTimer = document.querySelector('.blacktimer');
     const whiteTimer = document.querySelector('.whitetimer');
+    const blackCapture = document.querySelector('.blackcapture');
       if(window.innerWidth > 700){
         blackTimer.style.gridRow = '1';
         whiteTimer.style.gridRow = '3';
       }
+      blackCapture.style.transform = "rotate(180deg)";
       chessboard.style.transform = "rotate(0deg)";
  if(gameState.length < 1){
     blackClickDiable();
@@ -229,8 +229,7 @@ function handler(){
     }
   }
  if(gameState.length > 0){
-   let last = gameState.length - 1;
-   let [piece,currentrow,currentcol,pastrow,pastcol] = gameState[last];
+   let [piece,currentrow,currentcol,pastrow,pastcol] = gameState.at(-1);
    let piececolor = piece === piece.toUpperCase()? true : false;
    let pastcell = document.querySelector(`.cell[data-row="${pastrow}"][data-col="${pastcol}"]`);
    let currentcell = document.querySelector(`.cell[data-row="${currentrow}"][data-col="${currentcol}"]`);
