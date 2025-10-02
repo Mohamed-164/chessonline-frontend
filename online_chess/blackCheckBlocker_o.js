@@ -1,16 +1,21 @@
-import { BlackCapturedPiece, gameState } from "./mainChess.js";
-import { move, capture } from "./preloadsound.js";
-import { board } from "./boarddata.js";
-import { iskinginCheck } from "./checkDetection.js";
-import { renderboard } from "./mainChess.js";
-import { isPiecePinned } from "./pinnedPieces.js";
+import {
+  gameState,
+  gamemove,
+  renderboard,
+  clearHighlights,
+  BlackCapturedPiece,
+} from "./mainChess_o.js";
+import { gamecode, color, socket } from "./onlineChess.js";
+import { move, capture } from "./preloadsound_o.js";
+import { board } from "./boarddata_o.js";
+import { iskinginCheck } from "./checkDetection_o.js";
+import { isPiecePinned } from "./pinnedPieces_o.js";
 import {
   blackpawnlocation,
   blackKnightloaction,
   blackrookORqueenlocation,
   blackBishopORqueenlocation,
-} from "./whitePathDetection.js";
-import { clearHighlights } from "./mainChess.js";
+} from "./whitePathDetection_o.js";
 
 /* ***************************************** function thats help to block check for white ********************************* */
 
@@ -28,7 +33,7 @@ export function blackcheckBlocker() {
     black_Knightleft_down,
   } = blackKnightloaction();
 
-  let { blackthreadposition, DistanceBetweenBlack } =
+  let { blackthreadposition,DistanceBetweenBlack } =
     iskinginCheck();
   let {
     black_rookQueenup,
@@ -248,6 +253,22 @@ export function blackcheckBlocker() {
             gameState.push([clickedPiece,threadrow,threadcol,bkrow,bkcol]);
             let capturedpiece = board[threadrow][threadcol];     
             BlackCapturedPiece.push(capturedpiece);
+            let captureobj = {
+              code: gamecode,
+              mycolor: color,
+              color: "black",
+              captured: capturedpiece,
+              };
+              socket.emit("capture", captureobj);
+              let moveData = new gamemove(
+                color,
+                gamecode,
+                r,
+                c,
+                Attackrow,
+                Attackcol
+              );
+            socket.emit("move", moveData);
             board[threadrow][threadcol] = board[bkrow][bkcol];
             board[bkrow][bkcol] = "";
             capture.play();
@@ -260,6 +281,8 @@ export function blackcheckBlocker() {
                const brow = parseInt(el.dataset.row);
                const bcol = parseInt(el.dataset.col);
                 gameState.push([clickedPiece, brow, bcol, bkrow, bkcol]);
+                let moveData = new gamemove(color, gamecode, bkrow, bkcol, brow, bcol);
+                socket.emit("move", moveData);
                 board[brow][bcol] = board[bkrow][bkcol];
                 board[bkrow][bkcol] = "";
                 move.play();
@@ -303,6 +326,8 @@ export function blackcheckBlocker() {
                const brow = parseInt(el.dataset.row);
                const bcol = parseInt(el.dataset.col);
                 gameState.push([clickedPiece, brow, bcol, bkrow, bkcol]);
+                let moveData = new gamemove(color, gamecode, bkrow, bkcol, brow, bcol);
+                socket.emit("move", moveData);
                 board[brow][bcol] = board[bkrow][bkcol];
                 board[bkrow][bkcol] = "";
                 move.play();
@@ -328,6 +353,22 @@ export function blackcheckBlocker() {
             gameState.push([clickedPiece,threadrow,threadcol,row,col]);
             let capturedpiece = board[threadrow][threadcol];      
             BlackCapturedPiece.push(capturedpiece);
+            let captureobj = {
+              code: gamecode,
+              mycolor: color,
+              color: "black",
+              captured: capturedpiece,
+              };
+              socket.emit("capture", captureobj);
+              let moveData = new gamemove(
+                color,
+                gamecode,
+                r,
+                c,
+                Attackrow,
+                Attackcol
+              );
+            socket.emit("move", moveData);
             board[threadrow][threadcol] = board[row][col];
             board[row][col] = "";
             capture.play();
@@ -346,6 +387,7 @@ if(piece_onlyBlock.length > 0){
 if(piece_onlyAttack.length > 0){
   onlyAttack();
 }
+
 
 }
 
