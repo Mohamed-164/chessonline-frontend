@@ -169,7 +169,7 @@ function handler() {
     whiteClickDisable();
   }
 
-  if (Timer == null) {
+  if (Timer == null && duration !== 0) {
     initializetimer();
   }
   let {
@@ -348,3 +348,4 @@ export function renderboard(board) {
   handler();
 
 }
+
