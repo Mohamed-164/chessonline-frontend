@@ -52,8 +52,10 @@ window.modeSelect = modeSelect;
 
 socket.on('boardSetup',(setupdata) => {
   preloadAllSounds();
-  if(!isNaN(setupdata.mode)){
+  if(setupdata.mode !== 0){
     duration = 1000*60*setupdata.mode;
+  }else{
+    duration = null
   }
   
   color = setupdata.color;
@@ -161,6 +163,7 @@ socket.on('connect_timeout',() =>{
 socket.on('gameNotExists',() =>{
     window.location.href = '/invalid.html';
 });
+
 
 
 
