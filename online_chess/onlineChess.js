@@ -71,10 +71,10 @@ socket.on('pausetimer',() =>{
     whiteresumeTimer,
     blackresumeTimer
   } = Timer;
-  if(color == "white"){
+  if(color == "white" && duration){
     whitepauseTimer();
     blackresumeTimer();
-  }else if(color == "black"){
+  }else if(color == "black" && duration){
     blackpauseTimer();
     whiteresumeTimer();
   }
@@ -161,5 +161,6 @@ socket.on('connect_timeout',() =>{
 socket.on('gameNotExists',() =>{
     window.location.href = '/invalid.html';
 });
+
 
 
