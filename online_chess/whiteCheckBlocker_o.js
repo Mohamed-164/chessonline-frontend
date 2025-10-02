@@ -1,16 +1,21 @@
-import { gameState, WhiteCapturedPiece } from "./mainChess.js";
-import { move, capture } from "./preloadsound.js";
-import { board } from "./boarddata.js";
-import { iskinginCheck } from "./checkDetection.js";
-import { renderboard } from "./mainChess.js";
-import { isPiecePinned } from "./pinnedPieces.js";
+import { color, gamecode, socket } from "./onlineChess.js";
+import { board } from "./boarddata_o.js";
+import { move, capture } from "./preloadsound_o.js";
+import { iskinginCheck } from "./checkDetection_o.js";
+import {
+  renderboard,
+  gameState,
+  WhiteCapturedPiece,
+  gamemove,
+} from "./mainChess_o.js";
+import { isPiecePinned } from "./pinnedPieces_o.js";
 import {
   whitepawnlocation,
   whiteKnightloaction,
   whiterookORqueenlocation,
   whiteBishopORqueenlocation,
-} from "./blackPathDetection.js";
-import { clearHighlights } from "./mainChess.js";
+} from "./blackPathDetection_o.js";
+import { clearHighlights } from "./mainChess_o.js";
 
 /* ********************** function thats help to block check for white ************************* */
 
@@ -28,7 +33,7 @@ export function whitecheckBlocker() {
     white_Knightleft_down,
   } = whiteKnightloaction();
 
-  let { isWhiteincheck, whitethreadposition, DistanceBetweenWhite } =
+  let {whitethreadposition, DistanceBetweenWhite } =
     iskinginCheck();
   let {
     white_rookQueenup,
@@ -245,8 +250,24 @@ export function whitecheckBlocker() {
           let clickedPiece = board[bkrow][bkcol];
           threadplace.onclick = () =>{
             gameState.push([clickedPiece,threadrow,threadcol,bkrow,bkcol]);
-            let capturedpiece = board[threadrow][threadcol];      
+            let capturedpiece = board[threadrow][threadcol];     
             WhiteCapturedPiece.push(capturedpiece);
+            let captureobj = {
+              code: gamecode,
+              mycolor: color,
+              color: "white",
+              captured: capturedpiece,
+              };
+              socket.emit("capture", captureobj);
+              let moveData = new gamemove(
+                color,
+                gamecode,
+                r,
+                c,
+                Attackrow,
+                Attackcol
+              );
+            socket.emit("move", moveData);
             board[threadrow][threadcol] = board[bkrow][bkcol];
             board[bkrow][bkcol] = "";
             capture.play();
@@ -259,6 +280,8 @@ export function whitecheckBlocker() {
                const brow = parseInt(el.dataset.row);
                const bcol = parseInt(el.dataset.col);
                 gameState.push([clickedPiece, brow, bcol, bkrow, bkcol]);
+                let moveData = new gamemove(color, gamecode, bkrow, bkcol, brow, bcol);
+                socket.emit("move", moveData);
                 board[brow][bcol] = board[bkrow][bkcol];
                 board[bkrow][bkcol] = "";
                 move.play();
@@ -302,6 +325,8 @@ export function whitecheckBlocker() {
                const brow = parseInt(el.dataset.row);
                const bcol = parseInt(el.dataset.col);
                 gameState.push([clickedPiece, brow, bcol, bkrow, bkcol]);
+                let moveData = new gamemove(color, gamecode, bkrow, bkcol, brow, bcol);
+                socket.emit("move", moveData);
                 board[brow][bcol] = board[bkrow][bkcol];
                 board[bkrow][bkcol] = "";
                 move.play();
@@ -327,6 +352,22 @@ export function whitecheckBlocker() {
             gameState.push([clickedPiece,threadrow,threadcol,row,col]);
             let capturedpiece = board[threadrow][threadcol];      
             WhiteCapturedPiece.push(capturedpiece);
+            let captureobj = {
+              code: gamecode,
+              mycolor: color,
+              color: "white",
+              captured: capturedpiece,
+              };
+              socket.emit("capture", captureobj);
+              let moveData = new gamemove(
+                color,
+                gamecode,
+                r,
+                c,
+                Attackrow,
+                Attackcol
+              );
+            socket.emit("move", moveData);
             board[threadrow][threadcol] = board[row][col];
             board[row][col] = "";
             capture.play();
@@ -345,7 +386,8 @@ if(piece_onlyBlock.length > 0){
 if(piece_onlyAttack.length > 0){
   onlyAttack();
 }
-  }
+
+}
 
   return whiteAttackers || whiteblockers;
 }
