@@ -72,7 +72,7 @@ socket.on('pausetimer',() =>{
     blackpauseTimer,
     whiteresumeTimer,
     blackresumeTimer
-  } = Timer;
+  } = Timer ?? {};
   if(color == "white" && duration){
     whitepauseTimer();
     blackresumeTimer();
@@ -88,11 +88,11 @@ socket.on('resumeTimer',() => {
     whiteresumeTimer,
     blackresumeTimer,
     blackpauseTimer,
-  } = Timer;
-  if(color == "white"){
+  } = Timer ?? {};
+  if(color == "white" && duration){
     blackpauseTimer();
     whiteresumeTimer();
-  }else if(color == "black"){
+  }else if(color == "black" && duration){
     if(gameState.length > 2){
       blackresumeTimer();
     }
@@ -117,7 +117,6 @@ socket.on('move',(moveData) => {
     move.play();
    }
 
-  console.log(moveData.whitetime);
 
     board[toRow][toCol] = board[fromRow][fromCol];
     board[fromRow][fromCol] = '';
@@ -163,6 +162,7 @@ socket.on('connect_timeout',() =>{
 socket.on('gameNotExists',() =>{
     window.location.href = '/invalid.html';
 });
+
 
 
 
