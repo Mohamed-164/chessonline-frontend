@@ -175,7 +175,7 @@ function handler() {
   let {
     whitestartTimer,
     blackstartTimer,
-  } = Timer;
+  } = Timer ?? {};
   if (gameState.length < 1) {
     blackClickDiable();
     if (duration) {
@@ -348,4 +348,5 @@ export function renderboard(board) {
   handler();
 
 }
+
 
