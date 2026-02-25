@@ -125,6 +125,32 @@ socket.on('move',(moveData) => {
 
 });
 
+socket.on('enpassentAttacked',(moveData) => {
+
+  let fromRow = moveData.fromrow;
+  let fromCol = moveData.fromcol;
+
+  let toRow = moveData.torow;
+  let toCol = moveData.tocol;
+
+  let from = board[fromRow][fromCol];
+
+  gameState.push([from,toRow,toCol,fromRow,fromCol]);
+
+  if(color == "white"){
+    board[toRow][toCol] = board[fromRow][fromCol];
+    board[fromRow][fromCol] = '';
+    board[toRow - 1][toCol] = '';
+  }else if(color == "black"){
+    board[toRow][toCol] = board[fromRow][fromCol];
+    board[fromRow][fromCol] = '';
+    board[toRow + 1][toCol] = '';
+  }
+  renderboard(board);
+  capture.play();
+
+});
+
 socket.on('captured',(captureobj) => {
   let makecapture = captureobj.color;
   if(color == "white" && makecapture == "black"){
@@ -162,6 +188,7 @@ socket.on('connect_timeout',() =>{
 socket.on('gameNotExists',() =>{
     window.location.href = '/invalid.html';
 });
+
 
 
 
