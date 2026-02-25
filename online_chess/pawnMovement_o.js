@@ -55,7 +55,7 @@ function enpassentAttack(AttackCell,enpassentrow,enpassentcol,nowrow,nowcol){
     }
     gameState.push([clickedPiece,enpassentrow,enpassentcol,row,col]);
     let moveData = new gamemove(color,gamecode,row,col,enpassentrow,enpassentcol);
-    socket.emit("move", moveData);
+    socket.emit("enpassentAttack", moveData);
     board[enpassentrow][enpassentcol] = clickedPiece;
     board[row][col] = '';
     board[nowrow][nowcol] = '';
@@ -331,3 +331,4 @@ function showPromotionMenu(promotionPosition, promotedPiece) {
 
 
 }
+
