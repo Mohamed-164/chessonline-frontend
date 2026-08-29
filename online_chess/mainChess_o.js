@@ -57,7 +57,7 @@ window.resetgame = resetgame;
 
 export function gameOver() {
   gamefinish = true;
-  let { whitepauseTimer, blackpauseTimer } = Timer;
+  let { whitepauseTimer, blackpauseTimer } = Timer ?? {};
   const whiteresign = document.querySelector(".whiteresign");
 
   whiteresign.disabled = true;
@@ -69,8 +69,12 @@ export function gameOver() {
       cell.onclick = null;
     }
   }
-  whitepauseTimer();
-  blackpauseTimer();
+
+  if(duration > 0){
+    whitepauseTimer();
+    blackpauseTimer();
+  }
+
 }
 
 function capturedpieceshown() {
@@ -172,10 +176,8 @@ function handler() {
   if (Timer == null && duration !== 0) {
     initializetimer();
   }
-  let {
-    whitestartTimer,
-    blackstartTimer,
-  } = Timer ?? {};
+ let { whitestartTimer, blackstartTimer } = Timer ?? {};
+
   if (gameState.length < 1) {
     blackClickDiable();
     if (duration) {
@@ -348,5 +350,3 @@ export function renderboard(board) {
   handler();
 
 }
-
-
