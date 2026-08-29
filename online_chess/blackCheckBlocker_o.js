@@ -263,10 +263,10 @@ export function blackcheckBlocker() {
               let moveData = new gamemove(
                 color,
                 gamecode,
-                r,
-                c,
-                Attackrow,
-                Attackcol
+                bkrow,
+                bkcol,
+                threadrow,
+                threadcol
               );
             socket.emit("move", moveData);
             board[threadrow][threadcol] = board[bkrow][bkcol];
@@ -350,6 +350,7 @@ export function blackcheckBlocker() {
         threadremover.onclick = () => {
           threadplace.classList.add("AttackHighlight");
           threadplace.onclick = () => {
+
             gameState.push([clickedPiece,threadrow,threadcol,row,col]);
             let capturedpiece = board[threadrow][threadcol];      
             BlackCapturedPiece.push(capturedpiece);
@@ -363,10 +364,10 @@ export function blackcheckBlocker() {
               let moveData = new gamemove(
                 color,
                 gamecode,
-                r,
-                c,
-                Attackrow,
-                Attackcol
+                row,
+                col,
+                threadrow,
+                threadcol
               );
             socket.emit("move", moveData);
             board[threadrow][threadcol] = board[row][col];
@@ -378,17 +379,15 @@ export function blackcheckBlocker() {
       }
     }
 
-if(piece_Bothability.length > 0){
-  bothAbility();
-}
-if(piece_onlyBlock.length > 0){
-  onlyBlock();
-}
-if(piece_onlyAttack.length > 0){
-  onlyAttack();
-}
-
-
+    if(piece_Bothability.length > 0){
+      bothAbility();
+    }
+    if(piece_onlyBlock.length > 0){
+      onlyBlock();
+    }
+    if(piece_onlyAttack.length > 0){
+      onlyAttack();
+    }
 }
 
   return blackAttackers || blackblockers;
