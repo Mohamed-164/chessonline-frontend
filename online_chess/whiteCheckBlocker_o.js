@@ -262,10 +262,10 @@ export function whitecheckBlocker() {
               let moveData = new gamemove(
                 color,
                 gamecode,
-                r,
-                c,
-                Attackrow,
-                Attackcol
+                bkrow,
+                bkcol,
+                threadrow,
+                threadcol
               );
             socket.emit("move", moveData);
             board[threadrow][threadcol] = board[bkrow][bkcol];
@@ -362,10 +362,10 @@ export function whitecheckBlocker() {
               let moveData = new gamemove(
                 color,
                 gamecode,
-                r,
-                c,
-                Attackrow,
-                Attackcol
+                row,
+                col,
+                threadrow,
+                threadcol
               );
             socket.emit("move", moveData);
             board[threadrow][threadcol] = board[row][col];
